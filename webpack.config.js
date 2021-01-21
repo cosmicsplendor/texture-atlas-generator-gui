@@ -1,4 +1,6 @@
 const path = require("path")
+const webpack = require("webpack")
+
 module.exports = {
     entry: "/src/index.js",
     output: {
@@ -32,7 +34,11 @@ module.exports = {
             }
         ]
     },
-    plugins: [],
+    plugins: [
+        new webpack.ProvidePlugin({
+            React: "react"
+        })
+    ],
     devtool: "source-map",
     devServer: {
         port: 3000,

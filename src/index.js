@@ -1,10 +1,22 @@
-import React from "react"
+import { createContext } from "react"
 import reactDOM from "react-dom"
 
-const  App = () => {
+import App from "./components/app"
+
+const AppContext = createContext()
+
+
+const RootNode = () => {
+    
+
     return (
-        <h1> this app is yet to see the light of the dawn </h1>
+        <AppContext.Provider value={null} >
+            <App />
+        </AppContext.Provider>
     )
 }
 
-reactDOM.render(<App />, document.querySelector("#app"))
+
+reactDOM.render(<RootNode />, document.querySelector("#app"))
+
+export default AppContext
