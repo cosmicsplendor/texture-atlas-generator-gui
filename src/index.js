@@ -1,22 +1,18 @@
-import { createContext } from "react"
 import reactDOM from "react-dom"
 
-import App from "./components/app"
+import App from "./components/App"
+import AppContext from "./AppContext"
+import useImport from "./hooks/useImports"
 
-const AppContext = createContext()
-
-
-const RootNode = () => {
-    
-
+const AppContainer = () => {
+    const { imports } = useImport()
     return (
-        <AppContext.Provider value={null} >
+        <AppContext.Provider value={{ imports }} >
             <App />
         </AppContext.Provider>
     )
 }
 
-
-reactDOM.render(<RootNode />, document.querySelector("#app"))
+reactDOM.render(<AppContainer />, document.querySelector("#app"))
 
 export default AppContext

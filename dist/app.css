@@ -1,0 +1,26 @@
+body {
+    color: #444;
+    font-family: monospace;
+}
+.import-panel {
+    display: flex;
+    align-items: center;
+}
+.import-panel-item {
+    height: 100px;
+    width: 100px;
+}
+.import-panel-add {
+    background: linear-gradient(45deg, rgb(41 108 173), transparent);
+    border-bottom: 5px outset rgb(41 108 173 / 66%);
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 90px;
+    color: rgb(221, 221, 221);
+}
+.empty-imports-msg {
+    font-size: 1.5em;
+    margin-left: 1em;
+}
