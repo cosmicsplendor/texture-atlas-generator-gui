@@ -1,0 +1,50 @@
+.importPanel {
+    display: flex;
+    align-items: center;
+    padding: 0.5em;
+    box-shadow: 1px 2px 4px 1px #bdb8b8;
+    border-radius: 5px;
+    display: flex;
+    width: 95%;
+    margin: 1em 0;
+}
+
+.importPanelItem {
+    height: 100px;
+    width: 100px;
+    border-radius: 5px;
+}
+
+.importedImg {
+    composes: importPanelItem;
+    box-shadow: 1px 2px 4px 1px #bdb8b8;
+    margin-right: 10px;
+    object-fit: scale-down;
+    border: 1px solid #bbb;
+    background: url("./checkerboard.png");
+    background-size: "100px 100px";
+}
+
+.importPanelAddBtn {
+    composes: importPanelItem;
+    background: linear-gradient(45deg, rgb(30, 62, 151), transparent);
+    border-bottom: 4px outset rgb(35, 55, 168);
+    font-size: 85px;
+    opacity: 0.8;
+    margin-right: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: rgb(221, 221, 221);
+    cursor: pointer;
+
+}
+
+.importPanelAddBtn:hover, .importPanelAddBtn:focus, .importPanelAddBtn:active {
+    opacity: 1;
+    font-size: 95px;
+}
+
+.noImportsMsg {
+    font-size: 1.5em;
+}

@@ -14,5 +14,3 @@ const AppContainer = () => {
 }
 
 reactDOM.render(<AppContainer />, document.querySelector("#app-container"))
-
-export default AppContext

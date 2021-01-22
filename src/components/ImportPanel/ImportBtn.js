@@ -1,6 +1,7 @@
 import { useCallback, useContext } from "react"
 
 import AppContext from "../../AppContext"
+import styles from "./style.css"
 
 const readFile = file => {
     return new Promise((resolve, reject) => {
@@ -25,7 +26,7 @@ export default () => {
        <>
         <input id="import-field" type="file" style={{ display: "none" }} onChange={onNewFiles} multiple></input>
         <label htmlFor="import-field">
-            <div className="import-panel-add import-panel-item">
+            <div className={styles.importPanelAddBtn}>
                     +
             </div>
         </label>
