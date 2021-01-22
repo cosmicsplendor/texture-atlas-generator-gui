@@ -11,7 +11,7 @@ export default () => {
                     id: v4(),
                     ...payload
                 }
-                return [ newImport, ...prevImports ]
+                return [ ...prevImports, newImport ]
             break
             case importAxnTypes.remove:
                 return prevImports.filter(({ id }) => id !== payload.id)
@@ -36,7 +36,7 @@ export default () => {
 
     return {
         imports,
-        importsAxns: {
+        importAxns: {
             add,
             remove,
             clear

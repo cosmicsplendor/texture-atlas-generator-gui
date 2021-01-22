@@ -2,7 +2,7 @@ const path = require("path")
 const webpack = require("webpack")
 
 module.exports = {
-    entry: "/src/index.js",
+    entry: ["@babel/polyfill", "/src/index.js"],
     output: {
         filename: "app.bundle.js",
         path: path.join(process.cwd(), "/dist")
@@ -28,6 +28,8 @@ module.exports = {
                         presets: [
                             "@babel/preset-env",
                             "@babel/preset-react"
+                        ],
+                        plugins: [
                         ]
                     }
                 }

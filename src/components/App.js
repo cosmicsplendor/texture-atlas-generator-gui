@@ -4,8 +4,8 @@ import ImportPanel from "./ImportPanel"
 
 const  App = () => {
     return (
-        <div>
-            <div>
+        <div id="app">
+            <div className="upper-section">
                 <SidePanel />
                 <Canvas />
             </div>

@@ -1,26 +1,73 @@
+html, body {
+    width: 100%;
+    height: 100%;
+}
 body {
+    margin: 0;
     color: #444;
     font-family: monospace;
+}
+#app-container {
+    width: 100%;
+    height: 100%;
+}
+#app {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+.upper-section {
+    display: flex;
+    justify-content: space-between;
+    flex-grow: 1;
+    margin: 1em 0;
 }
 .import-panel {
     display: flex;
     align-items: center;
+    padding: 0.5em;
+    box-shadow: 1px 2px 4px 1px #bdb8b8;
+    border-radius: 5px;
+    display: flex;
+    width: 95%;
+    margin: 1em 0;
 }
 .import-panel-item {
     height: 100px;
     width: 100px;
+    border-radius: 5px;
+}
+img.import-panel-item {
+    box-shadow: 1px 2px 4px 1px #bdb8b8;
+    margin-right: 10px;
+    object-fit: scale-down;
+    background: linear-gradient(45deg, #808080 25%, transparent 25%), 
+    linear-gradient(-45deg, #808080 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, #808080 75%),
+    linear-gradient(-45deg, transparent 75%, #808080 75%);;
+    border: 1px solid #bbb;
 }
 .import-panel-add {
-    background: linear-gradient(45deg, rgb(41 108 173), transparent);
-    border-bottom: 5px outset rgb(41 108 173 / 66%);
-    border-radius: 5px;
+    background: linear-gradient(45deg, rgb(30, 62, 151), transparent);
+    border-bottom: 4px outset rgb(35, 55, 168);
+    font-size: 85px;
+    opacity: 0.8;
+    margin-right: 20px;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 90px;
     color: rgb(221, 221, 221);
+    cursor: pointer;
+
+}
+.import-panel-add:hover, .import-panel-add:focus, .import-panel-add:active {
+    opacity: 1;
+    font-size: 95px;
 }
 .empty-imports-msg {
     font-size: 1.5em;
-    margin-left: 1em;
 }

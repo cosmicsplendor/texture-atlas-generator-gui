@@ -5,14 +5,14 @@ import AppContext from "./AppContext"
 import useImport from "./hooks/useImports"
 
 const AppContainer = () => {
-    const { imports } = useImport()
+    const { imports, importAxns } = useImport()
     return (
-        <AppContext.Provider value={{ imports }} >
+        <AppContext.Provider value={{ imports, importAxns }} >
             <App />
         </AppContext.Provider>
     )
 }
 
-reactDOM.render(<AppContainer />, document.querySelector("#app"))
+reactDOM.render(<AppContainer />, document.querySelector("#app-container"))
 
 export default AppContext
