@@ -14,6 +14,7 @@ export default () => {
                 return [ ...prevImports, newImport ]
             break
             case importAxnTypes.remove:
+                console.log("Remove action called")
                 return prevImports.filter(({ id }) => id !== payload.id)
             break
             case importAxnTypes.clear:
@@ -27,6 +28,7 @@ export default () => {
     }, [])
     
     const remove = useCallback(item => {
+        console.log({ type: importAxnTypes.remove, payload: item })
         setImports({ type: importAxnTypes.remove, payload: item })
     }, [])
 

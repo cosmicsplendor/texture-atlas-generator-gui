@@ -15,17 +15,42 @@
     border-radius: 5px;
 }
 
+.importedItem {
+    composes: importPanelItem;
+    margin-right: 10px;
+    position: relative;
+}
+
+.rmImportBtn {
+    width: 1em;
+    height: 1em;
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    padding: 2px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    color: white;
+    background: red;
+    opacity: 0.7;
+    cursor: pointer;
+}
+.rmImportBtn:hover {
+    opacity: 1;
+}
+
 .importedImg {
     composes: importPanelItem;
     box-shadow: 1px 2px 4px 1px #bdb8b8;
-    margin-right: 10px;
     object-fit: scale-down;
     border: 1px solid #bbb;
     background: url("./checkerboard.png");
-    background-size: "100px 100px";
+    background-size: 100px 100px;
 }
 
-.importPanelAddBtn {
+.importBtn {
     composes: importPanelItem;
     background: linear-gradient(45deg, rgb(30, 62, 151), transparent);
     border-bottom: 4px outset rgb(35, 55, 168);
@@ -40,7 +65,7 @@
 
 }
 
-.importPanelAddBtn:hover, .importPanelAddBtn:focus, .importPanelAddBtn:active {
+.importBtn:hover, .importBtn:focus, .importBtn:active {
     opacity: 1;
     font-size: 95px;
 }

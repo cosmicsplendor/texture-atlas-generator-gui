@@ -26,7 +26,7 @@ export default () => {
        <>
         <input id="import-field" type="file" style={{ display: "none" }} onChange={onNewFiles} multiple></input>
         <label htmlFor="import-field">
-            <div className={styles.importPanelAddBtn}>
+            <div className={styles.importBtn}>
                     +
             </div>
         </label>
