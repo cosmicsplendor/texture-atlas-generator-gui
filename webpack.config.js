@@ -11,16 +11,17 @@ module.exports = {
     module: {
         rules: [
             {
-                test: /\.(png|jpe?g|mp3)$/,
+                test: /\.(png|jpe?g|mp3|svg)$/,
                 use: {
                     loader: "file-loader",
                     options: {
-                        outputPath: "images"
+                        outputPath: "assets"
                     }
                 }
             },
             {
                 test: /\.css$/,
+                exclude: "/node_modules",
                 use: [
                     "style-loader",
                     {

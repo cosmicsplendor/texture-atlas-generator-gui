@@ -11,7 +11,7 @@ export default () => {
         <>
             { 
                 imports.length ? 
-                imports.map(item => <ImportedItem key={item.id} {...item}/>) :
+                <div className={styles.importsContainer}> {imports.map(item => <ImportedItem key={item.id} {...item}/>)} </div> :
                 <div className={styles.noImportsMsg}> No Images Imported Yet </div> 
             }
         </>

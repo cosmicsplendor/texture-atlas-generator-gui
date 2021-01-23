@@ -1,7 +1,17 @@
+import Panel from "../UIPrimitives/Panel"
+
 export default () => {
     return (
-        <div>
-            Meta Panel
-        </div>
+        <Panel>
+            <h3>
+                Meta Panel 
+            </h3>
+            <div>
+                Final Image Size: 10KB
+            </div>
+            <div>
+                Packing Efficiency: 90%
+            </div>
+        </Panel>
     )
 }

@@ -4,6 +4,7 @@ html, body {
 }
 body {
     margin: 0;
+    background: whitesmoke;
     color: #444;
     font-family: monospace;
 }
@@ -19,10 +20,4 @@ body {
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-}
-.upper-section {
-    display: flex;
-    justify-content: space-between;
-    flex-grow: 1;
-    margin: 1em 0;
 }

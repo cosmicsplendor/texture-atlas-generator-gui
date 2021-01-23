@@ -3,6 +3,7 @@ import reactDOM from "react-dom"
 import App from "./components/App"
 import AppContext from "./AppContext"
 import useImport from "./hooks/useImports"
+import "./style.css"
 
 const AppContainer = () => {
     const { imports, importAxns } = useImport()
