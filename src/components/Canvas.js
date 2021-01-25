@@ -1,5 +1,7 @@
+import styles from "./style.css"
+
 export default () => {
     return (
-        <canvas />
+        <canvas className={styles.canvas}/>
     )
 }

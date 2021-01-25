@@ -11,7 +11,7 @@ export default () => {
                     id: v4(),
                     ...payload
                 }
-                return [ ...prevImports, newImport ]
+                return [ newImport, ...prevImports ]
             break
             case importAxnTypes.remove:
                 console.log("Remove action called")

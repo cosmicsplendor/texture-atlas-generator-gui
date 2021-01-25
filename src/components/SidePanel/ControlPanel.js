@@ -1,48 +1,66 @@
-import { Select, Checkbox, Input, Space } from "antd"
+import { Select, Input, Typography, Space, Button, Switch } from "antd"
+import { DownloadOutlined, UndoOutlined } from "@ant-design/icons"
 
-import Panel from "../UIPrimitives/Panel"
+const { Text } = Typography
+
 import styles from "./style.css"
 
 const { Option } = Select
 
 const algorithms = [
-    "algorithm1",
+    "algorithm1 (default)",
     "algorithm2",
     "algorithm3"
 ]
 
 export default () => {
     return (
-        <Panel>
+        <div>
             <h3>
-                Control Panel
+                Settings 
             </h3>
            <Space direction="vertical">
                 <div>
-                    <Space>
-                        <Select defaultValue={algorithms[0]} placeholder="sorting algorithm">
+                    <Space direction="vertical">
+                        <Text type="secondary">rect sorting function</Text>
+                        <Select defaultValue="algorithm 1">
                             {algorithms.map((a, i)=> <Option key={i} value={a}>{a}</Option>)}
                         </Select>
-                        <div>Sorting Algorithm</div>
                     </Space>
                 </div>
                 <div>
-                    <Space>
+                    <Space direction="vertical">
+                        <Text type="secondary">export metadata format</Text>
+                        <Select defaultValue="JSON Hash">
+                            <Option value="array">JSON Array</Option>
+                            <Option value="hash">JSON Hash</Option>
+                        </Select>
+                    </Space>
+                </div>
+                <div>
+                    <Space direction="vertical">
+                        <Text type="secondary">margin around the sprite</Text>
                         <Input className={styles.input} addonBefore="margin-x" addonAfter="px" rows={3}/>
-                    </Space>
-                </div>
-                <div>
-                    <Space>
                         <Input className={styles.input} addonBefore="margin-y" addonAfter="px"/>
                     </Space>
                 </div>
                 <div>
                     <Space>
-                        <Checkbox defaultChecked />
-                        <span>Enable Sprite Rotation</span>
+                        <Text type="secondary">Sprite Rotation</Text>
+                        <Switch />
                     </Space>
                 </div>
+                <Space className={styles.axnBtn} size="large">
+                    <Button> 
+                        <DownloadOutlined />
+                        <span>Image</span>
+                    </Button>
+                    <Button> 
+                        <DownloadOutlined />
+                        <span>JSON</span>
+                    </Button>
+                </Space>
            </Space>
-        </Panel>
+        </div>
     )
 }

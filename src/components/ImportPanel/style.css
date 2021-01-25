@@ -55,20 +55,19 @@
     box-shadow: 1px 2px 4px 1px #bdb8b8;
     object-fit: scale-down;
     border: 1px solid #bbb;
-    background: url("./checkerboard.png");
+    background: url("../../images/checkerboard.png");
     background-size: 100px 100px;
 }
 
 .importBtn {
     composes: importPanelItem;
-    background: steelblue;
+    color: #ff4d4f;
     font-size: 60px;
     opacity: 1;
     margin-right: 20px;
     display: flex;
     justify-content: center;
     align-items: center;
-    color: rgb(221, 221, 221);
     cursor: pointer;
 
 }
@@ -78,7 +77,7 @@
 }
 
 .noImportsMsg {
-    font-size: 2em;
-    font-weight: 700;
-    color: #333;
+    font-size: 1.5em;
+    font-weight: 600;
+    color: #666;
 }

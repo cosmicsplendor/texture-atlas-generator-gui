@@ -4,3 +4,11 @@
     justify-content: space-between;
     margin: 1em 0;
 }
+.canvas {
+    flex: 1;
+    background: grey;
+}
+.appbar {
+    width: 90%;
+    flex: 1;
+}
