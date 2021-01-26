@@ -1,0 +1,6 @@
+export const texture = "TEXTURE"
+export const text = "TEXT"
+export const rect = "RECT"
+export const sprite = "SPRITE"
+export const tilemap = "TILEMAP"
+export const parallax = "PARRALLAX"

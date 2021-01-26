@@ -1,12 +1,12 @@
-import { useState, useReducer, useCallback } from "react"
+import { useState, useReducer, useCallback, useMemo } from "react"
 
 export const sortingFns = [
     "max-side",
     "perimeter",
     "area",
     "diagonal",
-    "max-width",
-    "max-height",
+    "width",
+    "height",
 ]
 
 export const metaFormats = [
@@ -39,7 +39,7 @@ export default () => {
         if (!!metaFormat) {
             return setMetaFormat(metaFormat)
         }
-        if (typeof rotationEnabled !== undefined && typeof rotationEnabled !== null) {
+        if (typeof rotationEnabled !== "undefined" && typeof rotationEnabled !== "null") {
             return setRotationEnabled(rotationEnabled)
         }
         if (!!margin) {
@@ -47,8 +47,12 @@ export default () => {
         }
     }, [])
 
+    const settings = useMemo(() => {
+        return { sortingFn, metaFormat, rotationEnabled, margin }
+    }, [ sortingFn, metaFormat, rotationEnabled, margin])
+
     return [
-        { sortingFn, metaFormat, rotationEnabled, margin },
+        settings,
         updateSettings
     ]
 }

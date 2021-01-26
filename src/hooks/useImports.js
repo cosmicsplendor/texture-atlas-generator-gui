@@ -14,7 +14,6 @@ export default () => {
                 return [ newImport, ...prevImports ]
             break
             case importAxnTypes.remove:
-                console.log("Remove action called")
                 return prevImports.filter(({ id }) => id !== payload.id)
             break
             case importAxnTypes.clear:

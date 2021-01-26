@@ -14,12 +14,11 @@ const findPos = (node, { width: w, height: h }) => {
            null
 }
 
-export default function pack({ rects: rawRects, sortFn }) {
-    if (rawRects.length === 0) {
-        return []
-    }
-    const rects = rawRects.slice().sort((a, b) => (b.width * b.width + b.height * b.height) - (a.width * a.width + a.height * a.height))
-    // const rects = rawRects.slice().sort((a, b) => b.width * b.height - a.width * a.height )
+export default function pack(rawRects) {
+    // const rects = rawRects.slice().sort((a, b) => Math.max(b.width, b.height) - Math.max(a.width, a.height))
+    const rects = rawRects.slice().sort((a, b) => b.width * b.height - a.width * a.height )
+
+    console.log({ rawRects })
 
     const totalArea = rects.reduce((acc, cur) => acc + cur.width * cur.height, 0)
     const containerWidth = Math.max(rects[0].width, rects[0].height, Math.round(Math.sqrt(totalArea * 1.1)))
