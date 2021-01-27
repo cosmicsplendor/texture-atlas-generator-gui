@@ -28,7 +28,6 @@ export default function cnvRenderer(canvasID) {
         render(sprites) {
             this.clear()
             const textures = sprites.map(spriteToTexture)
-            console.log(textures)
             const packedTextures = packRects({ rects: textures, ...config})
 
             packedTextures.forEach(tex => {

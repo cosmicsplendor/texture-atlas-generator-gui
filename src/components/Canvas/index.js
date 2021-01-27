@@ -23,7 +23,6 @@ export default () => {
             console.log("Initializing canvas")
             cnvRenderer = cnvRendererFactory(CNV_ID)
         }
-        console.log("Applying settings")
         cnvRenderer.applySettings(settings)
         cnvRenderer.render(imports)
     }, [ settings.sortingFn, settings.rotationEnabled, settings.margin, imports ])

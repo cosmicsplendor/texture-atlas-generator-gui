@@ -41,8 +41,8 @@ export default () => {
                 <div>
                     <Space direction="vertical">
                         <Text type="secondary">margin around the sprite</Text>
-                        <Input className={styles.input} addonBefore="margin-x" value={margin.x} addonAfter="px" onChange={e => updateSettings({ margin: { x: e.target.value }})}/>
-                        <Input className={styles.input} addonBefore="margin-y" value={margin.y} addonAfter="px" onChange={e => updateSettings({ margin: { y: e.target.value }})}/>
+                        <Input className={styles.input} addonBefore="margin-x" value={margin.x} addonAfter="px" onChange={e => updateSettings({ margin: { x: Number(e.target.value) }})}/>
+                        <Input className={styles.input} addonBefore="margin-y" value={margin.y} addonAfter="px" onChange={e => updateSettings({ margin: { y: Number(e.target.value) }})}/>
                     </Space>
                 </div>
                 <div>
