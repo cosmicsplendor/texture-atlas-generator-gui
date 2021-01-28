@@ -11,8 +11,8 @@ In case you're curious, it uses React.js, and I believe this choice is self-expl
 npm start
 ```
 
-## features
+# features
 * Web based GUI
 * 90 degrees rotation support
 * customizable margin support
-* multiple rect sorting functions to choose from (optimal choice depends on the project)
+* multiple rect sorting functions to choose from (optimal choice depends on the set of input sprites)
