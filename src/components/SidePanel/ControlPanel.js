@@ -52,11 +52,11 @@ export default () => {
                     </Space>
                 </div>
                 <Space className={styles.axnBtn} size="large">
-                    <Button> 
+                    <Button type="primary" danger> 
                         <DownloadOutlined />
                         <span>Image</span>
                     </Button>
-                    <Button> 
+                    <Button type="primary" danger> 
                         <DownloadOutlined />
                         <span>JSON</span>
                     </Button>
