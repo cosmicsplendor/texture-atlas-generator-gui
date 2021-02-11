@@ -2,10 +2,9 @@ import { useContext, useEffect, useRef } from "react"
 
 import AppContext from "../../AppContext"
 import styles from "../style.css"
-import cnvRendererFactory from "../../utils/cnvRenderer"
+import texAtlas from "../../utils/texAtlas"
 
 const CNV_ID = "arena"
-let cnvRenderer
 
 export default () => {
     const { settings, imports } = useContext(AppContext)
@@ -19,12 +18,13 @@ export default () => {
     }, [])
 
     useEffect(() => {
-        if (typeof cnvRenderer === "undefined") {
+        if (!texAtlas.renderer) {
             console.log("Initializing canvas")
-            cnvRenderer = cnvRendererFactory(CNV_ID)
+            texAtlas.init(CNV_ID)
         }
-        cnvRenderer.applySettings(settings)
-        cnvRenderer.render(imports)
+        texAtlas
+            .applySettings(settings)
+            .render(imports)
     }, [ settings.sortingFn, settings.rotationEnabled, settings.margin, imports ])
 
     return (

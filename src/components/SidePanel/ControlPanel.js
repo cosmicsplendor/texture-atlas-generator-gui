@@ -1,13 +1,20 @@
-import { useContext, useCallback } from "react"
+import { useContext } from "react"
 import { Select, Input, Typography, Space, Button, Switch } from "antd"
 import { DownloadOutlined } from "@ant-design/icons"
 
 import { sortingFns, metaFormats } from "../../hooks/useSettings"
 import AppContext from "../../AppContext"
+import downloadText from "../../utils/downloadText"
+import texAtlas from "../../utils/texAtlas"
 import styles from "./style.css"
 
 const { Text } = Typography
 const { Option } = Select
+
+const downloadMeta = () => {
+    const body = JSON.stringify(texAtlas.getMeta(), null, 4)
+    downloadText({ body, name: "metadata", format: "json"})
+}
 
 export default () => {
     const { settings: {
@@ -56,7 +63,7 @@ export default () => {
                         <DownloadOutlined />
                         <span>Image</span>
                     </Button>
-                    <Button type="primary" danger> 
+                    <Button type="primary" danger onClick={downloadMeta}> 
                         <DownloadOutlined />
                         <span>JSON</span>
                     </Button>
