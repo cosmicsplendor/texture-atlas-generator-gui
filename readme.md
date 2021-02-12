@@ -1,5 +1,5 @@
 # Texture Atlas Generator GUI
-![App Screenshot](https://github.com/xtropia/texture-atlas-generator-gui/blob/master/src/images/screenShot.png)
+![App Screenshot](https://github.com/xtropia/texture-atlas-generator-gui/blob/master/src/images/screenshot.png)
 This is a free web-based gui application for generating texture atlas. At this point, I cannot say that it can compete with professional tools like texture packer. However, the fact that it is free and opensource definitely makes it worth considering.
 
 Over time, I will keep adding new features and improving UX.
