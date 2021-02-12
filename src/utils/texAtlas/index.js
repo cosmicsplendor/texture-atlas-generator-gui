@@ -41,7 +41,7 @@ export default { // singleton object
 
         renderer.renderRecursively()
 
-        this._meta = packedTextures
+        this._meta = packedTextures.length ? packedTextures: null
     },
     getMeta() {
         return this._meta

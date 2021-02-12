@@ -7,12 +7,14 @@ import { CNV_ID } from "../../../constants"
 import styles from "../style.css"
 
 const downloadMeta = () => {
+    if (!texAtlas.getMeta()) return
     const body = JSON.stringify(texAtlas.getMeta(), null, 4)
-    download.text({ body, name: "", format: "json"})
+    download.text({ body, name: `atlasmeta-${Date.now()}`, format: "json"})
 }
 
 const downloadImg = () => {
-    download.canvas({ canvasID: CNV_ID, name: "atlas", format: "png"})
+    if (!texAtlas.getMeta()) return
+    download.canvas({ canvasID: CNV_ID, name: `texatlas-${Date.now()}`, format: "png"})
 }
 
 export default () =>(

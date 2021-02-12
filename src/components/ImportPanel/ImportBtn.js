@@ -28,7 +28,7 @@ export default () => {
         <input id="import-field" type="file" style={{ display: "none" }} onChange={onNewFiles} accept="image/*" multiple></input>
         <label htmlFor="import-field">
             <div className={styles.importBtn}>
-                    <PlusOutlined/>
+                <PlusOutlined/>
             </div>
         </label>
        </>
