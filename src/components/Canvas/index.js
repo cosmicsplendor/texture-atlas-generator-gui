@@ -3,8 +3,8 @@ import { useContext, useEffect, useRef } from "react"
 import AppContext from "../../AppContext"
 import styles from "../style.css"
 import texAtlas from "../../utils/texAtlas"
+import { CNV_ID } from "../../constants"
 
-const CNV_ID = "arena"
 
 export default () => {
     const { settings, imports } = useContext(AppContext)

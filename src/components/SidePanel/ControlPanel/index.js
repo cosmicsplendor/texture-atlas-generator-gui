@@ -1,20 +1,13 @@
 import { useContext } from "react"
-import { Select, Input, Typography, Space, Button, Switch } from "antd"
-import { DownloadOutlined } from "@ant-design/icons"
+import { Select, Input, Typography, Space, Switch } from "antd"
 
-import { sortingFns, metaFormats } from "../../hooks/useSettings"
-import AppContext from "../../AppContext"
-import downloadText from "../../utils/downloadText"
-import texAtlas from "../../utils/texAtlas"
-import styles from "./style.css"
+import { sortingFns, metaFormats } from "../../../hooks/useSettings"
+import AxnBtns from "./AxnBtns"
+import AppContext from "../../../AppContext"
+import styles from "../style.css"
 
 const { Text } = Typography
 const { Option } = Select
-
-const downloadMeta = () => {
-    const body = JSON.stringify(texAtlas.getMeta(), null, 4)
-    downloadText({ body, name: "metadata", format: "json"})
-}
 
 export default () => {
     const { settings: {
@@ -58,16 +51,7 @@ export default () => {
                         <Switch checked={rotationEnabled} onChange={checked => updateSettings({ rotationEnabled: checked })}/>
                     </Space>
                 </div>
-                <Space className={styles.axnBtn} size="large">
-                    <Button type="primary" danger> 
-                        <DownloadOutlined />
-                        <span>Image</span>
-                    </Button>
-                    <Button type="primary" danger onClick={downloadMeta}> 
-                        <DownloadOutlined />
-                        <span>JSON</span>
-                    </Button>
-                </Space>
+                <AxnBtns />
            </Space>
         </div>
     )

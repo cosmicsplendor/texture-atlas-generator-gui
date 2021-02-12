@@ -1,0 +1,1 @@
+export const CNV_ID = "arena"
