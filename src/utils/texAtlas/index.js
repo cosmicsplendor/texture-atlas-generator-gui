@@ -9,14 +9,17 @@ const spriteToTexture = ({ src, name }) => {
     tex.height = tex.img.height
     return tex
 }
-
 export default { // singleton object
     _meta: null,
     atlas: new Node(),
     config: {},
     renderer: null,
+    onscreenCanvas: null,
     init(canvasID) {
-        this.renderer = new Canvas2DRenderer({ canvasId: canvasID, scene: this.atlas })
+        const offscreenCanvas = new OffscreenCanvas(200, 200)
+
+        this.renderer = new Canvas2DRenderer({ canvas: offscreenCanvas, scene: this.atlas })
+        this.onscreenCanvas = document.getElementById(canvasID)
     },
     applySettings(settings) {
         const configKeys = Object.keys(settings)
@@ -33,12 +36,14 @@ export default { // singleton object
         const { atlas, config, renderer } = this
         this.clear()
         const textures = sprites.map(spriteToTexture)
-        const packedTextures = packRects({ rects: textures, ...config})
+        const { packedRects: packedTextures, dim } = packRects({ rects: textures, ...config})
 
         packedTextures.forEach(tex => {
             atlas.add(tex)
         })
 
+        renderer.canvas.width = dim.width
+        renderer.canvas.height = dim.height
         renderer.renderRecursively()
 
         this._meta = packedTextures.length ? packedTextures: null

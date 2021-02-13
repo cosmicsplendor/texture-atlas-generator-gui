@@ -24,9 +24,11 @@ export const text = ({ name, format, body }) => {
     downloadData({ data: textData, name, format })
 }
 
-export const canvas = ({ canvasID, name, format }) => {
-    const cnv = document.getElementById(canvasID)
-    const imageData = cnv.toDataURL(`image/${format}`)
+export const canvas = async ({ canvas, offscreen, canvasID, name, format }) => {
+    const cnv = canvas || document.getElementById(canvasID)
+    const imageData = !!offscreen ?
+                      URL.createObjectURL(await canvas.convertToBlob()) :
+                      cnv.toDataURL(`image/${format}`)
 
     downloadData({ data: imageData, name, format })
 }

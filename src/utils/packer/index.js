@@ -7,9 +7,16 @@ const sortingFns = {
     height: (a, b) => b.height - a.height
 }
 
+const calcAtlasHeight = rootNode => { // tail call optimized
+    if (!rootNode.down) {
+        return rootNode.y
+    }
+    return calcAtlasHeight(rootNode.down)
+}
+
 export default function pack({ rects: rawRects, sortingFn, rotationEnabled, margin }) {
     if (rawRects.length === 0) {
-        return []
+        return { packedRects: [], dim: { width: 0, height: 0 } }
     }
 
     const occupyNode = (node, { w, h }) => {
@@ -36,6 +43,11 @@ export default function pack({ rects: rawRects, sortingFn, rotationEnabled, marg
     const totalArea = rects.reduce((acc, cur) => acc + (cur.width + margin.x) * (cur.height + margin.y), 0)
     const containerWidth = Math.max(rects[0].width + margin.x, rects[0].height + margin.y, Math.round(Math.sqrt(totalArea * 1.1)))
     const rootNode = { x: 0, y: 0, width: containerWidth, height: Infinity } // root node of the tree
+    const packedRects = rects.map(rect => ({ ...rect, ...findPos(rootNode, rect) }))
+    const containerHeight = calcAtlasHeight(rootNode, margin.y)
 
-    return rects.map(rect => ({ ...rect, ...findPos(rootNode, rect) }))
+    return {
+        packedRects,
+        dim: { width: containerWidth, height: containerHeight }
+    }
 }

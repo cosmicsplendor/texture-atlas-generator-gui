@@ -1,8 +1,8 @@
 import * as types from "../entities/core/types"
 
 class Canvas2DRenderer {
-    constructor({ canvasId, scene }) {
-        this.canvas = document.querySelector(`#${canvasId}`)
+    constructor({ canvasId, canvas, scene }) {
+        this.canvas = !!canvas ? canvas: document.querySelector(`#${canvasId}`)
         this.scene = scene
         this.ctx = this.canvas.getContext("2d")
     }
