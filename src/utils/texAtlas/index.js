@@ -5,9 +5,10 @@ import packRects from "../packer"
 import { PREVIEW_ID } from "../../constants"
 
 const spriteToTexture = ({ src, name }) => {
-    const tex = new Texture({ imgUrl: src, name })
+    const tex = new Texture({ imgUrl: src })
     tex.width = tex.img.width
     tex.height = tex.img.height
+    tex.name = name.split(".")[0]
     return tex
 }
 
@@ -56,10 +57,22 @@ const texAtlas = { // singleton object
             })
             .catch(e => console.log(`Error:\n${e.message}`))
 
-        this._meta = packedTextures.length ? packedTextures: null
+        this._meta = packedTextures
     },
-    getMeta() {
-        return this._meta
+    getMeta(format) {
+        switch(format) {
+            case "Hash":
+                return this._meta.reduce((acc, cur) => {
+                    const { name, pos, rotation, width, height } = cur
+                    acc[name] = { ...pos, rotation, width, height }
+                    return acc
+                }, {})
+            case "Array":
+                return this._meta.map(({ name, pos, rotation, width, height }) => ({
+                    name, ...pos, rotation, width, height
+                }))
+            break
+        }
     }
 }
 

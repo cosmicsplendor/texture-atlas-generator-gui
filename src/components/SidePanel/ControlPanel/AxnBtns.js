@@ -1,38 +1,44 @@
+import { useContext, useCallback } from "react"
 import { DownloadOutlined } from "@ant-design/icons"
 import { Button, Space } from "antd"
 
 import * as download from "../../../utils/download"
+import AppContext from "../../../AppContext"
 import texAtlas from "../../../utils/texAtlas"
 import styles from "../style.css"
 
-const downloadMeta = () => {
-    if (!texAtlas.getMeta()) return
-    const body = JSON.stringify(texAtlas.getMeta(), null, 4)
-    download.text({ 
-        body, name: `atlasmeta-${Date.now()}`, 
-        format: "json"
-    })
-}
+export default () => {
+    const { settings: { metaFormat }, imports } = useContext(AppContext)
 
-const downloadImg = () => {
-    if (!texAtlas.getMeta()) return
-    download.canvas({ 
-        canvas: texAtlas.renderer.canvas, 
-        offscreen: true, 
-        name: `texatlas-${Date.now()}`, 
-        format: "png"
-    })
-}
+    const downloadMeta = useCallback(() => {
+        if (imports.length === 0) return
+        const body = JSON.stringify(texAtlas.getMeta(metaFormat), null, 4)
+        download.text({ 
+            body, name: `atlasmeta-${Date.now()}`, 
+            format: "json"
+        })
+    }, [ imports, metaFormat ])
+    
+    const downloadImg = useCallback(() => {
+        if (imports.length === 0) return
+        download.canvas({ 
+            canvas: texAtlas.renderer.canvas, 
+            offscreen: true, 
+            name: `texatlas-${Date.now()}`, 
+            format: "png"
+        })
+    }, [ imports, metaFormat ])
 
-export default () =>(
-    <Space className={styles.axnBtn} size="large">
-        <Button type="primary" danger onClick={downloadImg}> 
-            <DownloadOutlined />
-            <span>Image</span>
-        </Button>
-        <Button type="primary" danger onClick={downloadMeta}> 
-            <DownloadOutlined />
-            <span>JSON</span>
-        </Button>
-    </Space>
-)
+    return (
+        <Space className={styles.axnBtn} size="large">
+            <Button type="primary" danger onClick={downloadImg}> 
+                <DownloadOutlined />
+                <span>Image</span>
+            </Button>
+            <Button type="primary" danger onClick={downloadMeta}> 
+                <DownloadOutlined />
+                <span>JSON</span>
+            </Button>
+        </Space>
+    )
+}

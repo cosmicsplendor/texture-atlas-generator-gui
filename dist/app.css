@@ -9,8 +9,9 @@ body {
     font-family: monospace;
 }
 #app-container {
-    width: 100%;
+    max-width: 1000px;
     height: 100%;
+    margin: 0 auto;
 }
 #app {
     width: 100%;
