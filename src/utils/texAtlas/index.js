@@ -2,6 +2,7 @@ import Node from "./entities/Node"
 import Canvas2DRenderer from "./renderer/Canvas2D"
 import Texture from "./entities/core/Texture"
 import packRects from "../packer"
+import { PREVIEW_ID } from "../../constants"
 
 const spriteToTexture = ({ src, name }) => {
     const tex = new Texture({ imgUrl: src, name })
@@ -9,17 +10,16 @@ const spriteToTexture = ({ src, name }) => {
     tex.height = tex.img.height
     return tex
 }
-export default { // singleton object
+
+const texAtlas = { // singleton object
     _meta: null,
-    atlas: new Node(),
+    atlas: null,
     config: {},
     renderer: null,
-    onscreenCanvas: null,
-    init(canvasID) {
+    init() {
         const offscreenCanvas = new OffscreenCanvas(200, 200)
-
+        this.atlas = new Node()
         this.renderer = new Canvas2DRenderer({ canvas: offscreenCanvas, scene: this.atlas })
-        this.onscreenCanvas = document.getElementById(canvasID)
     },
     applySettings(settings) {
         const configKeys = Object.keys(settings)
@@ -46,9 +46,23 @@ export default { // singleton object
         renderer.canvas.height = dim.height
         renderer.renderRecursively()
 
+        // sync with the preview
+        renderer.canvas
+            .convertToBlob()
+            .then(blob => {
+                document
+                    .querySelector(`#${PREVIEW_ID}`)
+                    .setAttribute("src", URL.createObjectURL(blob))
+            })
+            .catch(e => console.log(`Error:\n${e.message}`))
+
         this._meta = packedTextures.length ? packedTextures: null
     },
     getMeta() {
         return this._meta
     }
 }
+
+texAtlas.init()
+
+export default texAtlas

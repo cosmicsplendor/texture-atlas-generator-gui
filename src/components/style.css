@@ -4,9 +4,14 @@
     justify-content: space-between;
     margin: 1em 0;
 }
-.canvas {
+.preview {
     flex: 1;
     background: silver;
+}
+.previewImg {
+    background: transparent;
+    object-fit: scale-down;
+    object-position: 0 0;
 }
 .appbar {
     width: 90%;

@@ -1,1 +1,1 @@
-export const CNV_ID = "arena"
+export const PREVIEW_ID = "preview"

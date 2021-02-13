@@ -3,31 +3,30 @@ import { useContext, useEffect, useRef } from "react"
 import AppContext from "../../AppContext"
 import styles from "../style.css"
 import texAtlas from "../../utils/texAtlas"
-import { CNV_ID } from "../../constants"
+import { PREVIEW_ID } from "../../constants"
 
 
 export default () => {
     const { settings, imports } = useContext(AppContext)
-    const cnvRef = useRef()
+    const previewContainerRef = useRef()
     
     useEffect(() => {
-        const canvas = cnvRef.current
-        const { width, height } = cnvRef.current.getBoundingClientRect()
-        canvas.width = width
-        canvas.height = height
+        const previewContainer = previewContainerRef.current
+        const previewImage = previewContainer.querySelector(`#${PREVIEW_ID}`)
+        const { width, height } = previewContainer.getBoundingClientRect()
+        previewImage.width = width
+        previewImage.height = height
     }, [])
 
     useEffect(() => {
-        if (!texAtlas.renderer) {
-            console.log("Initializing canvas")
-            texAtlas.init(CNV_ID)
-        }
         texAtlas
             .applySettings(settings)
             .render(imports)
     }, [ settings.sortingFn, settings.rotationEnabled, settings.margin, imports ])
 
     return (
-        <canvas ref={cnvRef} className={styles.canvas} id={CNV_ID} />
+       <div className={styles.preview} ref={previewContainerRef}>
+            <img style={{ display: !!imports.length ? "block": "none"}} className={styles.previewImg} id={PREVIEW_ID} />
+       </div>
     )
 }
