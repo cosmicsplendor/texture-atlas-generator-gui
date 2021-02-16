@@ -7,7 +7,16 @@ import styles from "./style.css"
 const readFile = file => {
     return new Promise((resolve, reject) => {
         const reader = new FileReader()
-        reader.onload = () => resolve({ name: file.name, src: reader.result })
+        reader.onload = () => {
+            const tempImg = new Image()
+
+            const { result } = reader
+            tempImg.src = result
+
+            tempImg.onload = () => {
+                resolve({ name: file.name, src: result, width: tempImg.width, height: tempImg.height })
+            }
+        }
         reader.onerror = reject
         reader.readAsDataURL(file)
     })

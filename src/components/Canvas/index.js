@@ -22,7 +22,7 @@ export default () => {
         texAtlas
             .applySettings(settings)
             .render(imports)
-    }, [ settings.sortingFn, settings.rotationEnabled, settings.margin, JSON.stringify(imports.map(({ name, ...rest }) => ({ ...rest }))) ])
+    }, [ settings.sortingFn, settings.rotationEnabled, settings.margin, JSON.stringify(imports.map(({ name, hitboxSlider,  ...rest }) => ({ ...rest }))) ])
 
     return (
        <div className={styles.preview} ref={previewContainerRef}>
