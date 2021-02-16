@@ -3,7 +3,7 @@ import { useContext, useCallback } from "react"
 import AppContext from "../../../AppContext"
 import styles from "../style.css"
 
-export default ({ src, id, name }) => {
+export default ({ src, id }) => {
     const { importAxns, activeSprite, setActiveSprite } = useContext(AppContext)
     const removeImportedItem = useCallback((e) => {
         e.stopPropagation()

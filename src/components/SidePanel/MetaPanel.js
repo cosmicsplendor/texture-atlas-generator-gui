@@ -11,12 +11,10 @@ const { Option } = Select
 const hitboxShapes = [ "Circle", "Rectangle"]
 
 export default () => {
-    const { activeSprite, imports } = useContext(AppContext)
-    console.log({ activeSprite })
-    console.log(imports.find(({ id }) => activeSprite === id))
+    const { activeSprite, imports, importAxns } = useContext(AppContext)
     const { src: spriteImg, name } = useMemo(() => {
         return imports.find(({ id }) => activeSprite === id)
-    }, [ activeSprite ]) || {}
+    }, [ activeSprite, imports ]) || {}
     const inputsDisabled = !activeSprite
     return (
         <div>
@@ -33,8 +31,8 @@ export default () => {
                 </Space>
                 <Space direction="vertical">
                         <Space direction="vertical">
-                            <Text type="secondary">Name of the Sprite</Text>
-                            <Input className={styles.input} value={name} placeholder="not selected"/>
+                            <Text type="secondary">Selected Sprite Name</Text>
+                            <Input className={styles.input} value={name} placeholder="not selected" onChange={e => importAxns.update({ id: activeSprite, name: e.target.value })}/>
                         </Space>
                         <Space direction="vertical">
                             <Text type="secondary">Hitbox Shape</Text>

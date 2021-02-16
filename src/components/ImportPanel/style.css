@@ -4,7 +4,7 @@
     display: flex;
     box-sizing: border-box;
     width: 90%;
-    margin: 1em 0;
+    margin-bottom: 1em;
     padding: 8px;
 }
 
@@ -69,7 +69,7 @@
 
 .importBtn {
     composes: importPanelItem;
-    color: #ff4d4f;
+    color: silver;
     font-size: 80px;
     opacity: 1;
     margin-right: 20px;

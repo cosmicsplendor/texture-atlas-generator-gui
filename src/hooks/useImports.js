@@ -13,6 +13,8 @@ export default () => {
                     name: payload.name.replace(/\..+/, "")
                 }
                 return [ newImport, ...prevImports ]
+            case importAxnTypes.update:
+                return prevImports.map(imp => imp.id === payload.id ? { ...imp, ...payload }: imp)
             case importAxnTypes.remove:
                 return prevImports.filter(({ id }) => id !== payload.id)
             case importAxnTypes.clear:
@@ -23,6 +25,10 @@ export default () => {
     const add = useCallback(item => {
         setImports({ type: importAxnTypes.add, payload: item })
     }, [])
+
+    const update = useCallback(payload => {
+        setImports({ type: importAxnTypes.update, payload })
+    })
     
     const remove = useCallback(item => {
         setImports({ type: importAxnTypes.remove, payload: item })
@@ -36,6 +42,7 @@ export default () => {
         imports,
         importAxns: {
             add,
+            update,
             remove,
             clear
         }
