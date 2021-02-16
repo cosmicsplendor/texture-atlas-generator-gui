@@ -4,13 +4,15 @@ import Panel from "../UIPrimitives/Panel"
 import ControlPanel from "./ControlPanel"
 import MetaPanel from "./MetaPanel"
 
+import styles from "./style.css"
+
 
 export default () => {
     return (
-        <Panel>
+        <Panel className={styles.sidePanel}>
             <Space direction="vertical" size="large">
-                <ControlPanel />
                 <MetaPanel />
+                <ControlPanel />
             </Space>
         </Panel>
     )

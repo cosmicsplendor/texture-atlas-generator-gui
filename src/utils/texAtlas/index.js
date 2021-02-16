@@ -8,7 +8,7 @@ const spriteToTexture = ({ src, name }) => {
     const tex = new Texture({ imgUrl: src })
     tex.width = tex.img.width
     tex.height = tex.img.height
-    tex.name = name.split(".")[0]
+    tex.name = name.replace("\..+$", "")
     return tex
 }
 

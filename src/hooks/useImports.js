@@ -9,16 +9,14 @@ export default () => {
             case importAxnTypes.add:
                 const newImport = {
                     id: v4(),
-                    ...payload
+                    ...payload,
+                    name: payload.name.replace(/\..+/, "")
                 }
                 return [ newImport, ...prevImports ]
-            break
             case importAxnTypes.remove:
                 return prevImports.filter(({ id }) => id !== payload.id)
-            break
             case importAxnTypes.clear:
                 return []
-            break
         }
     }, [])
 
@@ -27,7 +25,6 @@ export default () => {
     }, [])
     
     const remove = useCallback(item => {
-        console.log({ type: importAxnTypes.remove, payload: item })
         setImports({ type: importAxnTypes.remove, payload: item })
     }, [])
 

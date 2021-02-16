@@ -1,3 +1,4 @@
+import { useState } from "react"
 import reactDOM from "react-dom"
 
 import App from "./components/App"
@@ -7,10 +8,11 @@ import useSettings from "./hooks/useSettings"
 import "./style.css"
 
 const AppContainer = () => {
+    const [ activeSprite, setActiveSprite ] = useState("")
     const { imports, importAxns } = useImport()
     const [ settings, updateSettings ] = useSettings()
     return (
-        <AppContext.Provider value={{ imports, importAxns, settings, updateSettings }} >
+        <AppContext.Provider value={{ imports, importAxns, settings, updateSettings, activeSprite, setActiveSprite }} >
             <App />
         </AppContext.Provider>
     )

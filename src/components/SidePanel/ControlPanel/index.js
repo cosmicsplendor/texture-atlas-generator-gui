@@ -25,7 +25,7 @@ export default () => {
                 <div>
                     <Space direction="vertical">
                         <Text type="secondary">rect sorting function</Text>
-                        <Select value={sortingFn} onChange={value => updateSettings({ sortingFn: value })} size="large">
+                        <Select value={sortingFn} className={styles.select} onChange={value => updateSettings({ sortingFn: value })} size="large">
                             {sortingFns.map((name, i) => <Option key={i} value={name}>{name}</Option>)}
                         </Select>
                     </Space>
@@ -33,7 +33,7 @@ export default () => {
                 <div>
                     <Space direction="vertical">
                         <Text type="secondary">export metadata format</Text>
-                        <Select value={metaFormat} onChange={value => updateSettings({ metaFormat: value })}>
+                        <Select value={metaFormat} className={styles.select} onChange={value => updateSettings({ metaFormat: value })}>
                             {metaFormats.map((name, i) => <Option key={i} value={name}>JSON {name}</Option>)}
                         </Select>
                     </Space>
@@ -41,8 +41,10 @@ export default () => {
                 <div>
                     <Space direction="vertical">
                         <Text type="secondary">margin around the sprite</Text>
-                        <Input className={styles.input} addonBefore="margin-x" value={margin.x} addonAfter="px" onChange={e => updateSettings({ margin: { x: Number(e.target.value) }})}/>
-                        <Input className={styles.input} addonBefore="margin-y" value={margin.y} addonAfter="px" onChange={e => updateSettings({ margin: { y: Number(e.target.value) }})}/>
+                        <Space>
+                            <Input className={styles.input} addonBefore="x" value={margin.x} addonAfter="px" onChange={e => updateSettings({ margin: { x: Number.parseInt(e.target.value || 0) }})}/>
+                            <Input className={styles.input} addonBefore="y" value={margin.y} addonAfter="px" onChange={e => updateSettings({ margin: { y: Number.parseInt(e.target.value || 0) }})}/>
+                        </Space>
                     </Space>
                 </div>
                 <div>
