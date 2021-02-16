@@ -4,17 +4,25 @@ import { Space, Typography, Input, Select, Slider } from "antd"
 import AppContext from ".././../AppContext"
 import placeholderImg from "../../images/placeholder.png"
 import styles from "./style.css"
-import { HBOX_SLIDER_H, HBOX_SLIDER_W } from "../../constants"
+import { HBOX_SLIDER_W, HBOX_EDITOR_W, HBOX_EDITOR_IMG_W } from "../../constants"
 
 const sliderStyles = {
     hor: { width: HBOX_SLIDER_W },
-    vert: { height: HBOX_SLIDER_H }
+    vert: { height: HBOX_SLIDER_W }
 }
+const hitboxEditorStyle = {
+    width: HBOX_EDITOR_W,
+    height: HBOX_EDITOR_W
+}
+const hitboxEditorImgStyle = {
+    width: HBOX_EDITOR_IMG_W,
+    height: HBOX_EDITOR_IMG_W
+}
+const hitboxShapes = [ "Circle", "Rectangle"]
 
 const { Text } = Typography
 const { Option } = Select
 
-const hitboxShapes = [ "Circle", "Rectangle"]
 
 const calcSliderRange = (width, height) => {
     const max = Math.max(width, height)
@@ -28,6 +36,20 @@ const calcSliderRange = (width, height) => {
     }
 }
 
+
+
+const calcHitboxElDims = sliderRange => {
+    const { hor: [ x1, x2 ], vert: [ y1, y2 ] } = sliderRange
+    const scaleFactor = HBOX_SLIDER_W / 100
+    const offset = (HBOX_EDITOR_W - HBOX_EDITOR_IMG_W) / 2
+    return {
+        left: x1 * scaleFactor + offset,
+        top: y1 * scaleFactor + offset,
+        width: (x2 - x1) * scaleFactor,
+        height: (y2 - y1) * scaleFactor
+    }
+}
+
 export default () => {
     const { activeSprite: activeSpriteID, imports, importAxns } = useContext(AppContext)
     const activeSprite = useMemo(() => {
@@ -36,6 +58,8 @@ export default () => {
     const inputsDisabled = !activeSpriteID
     const { src: spriteImg, name, width=150, height=150, hitboxSlider } = activeSprite
     const sliderRange = hitboxSlider || calcSliderRange(width, height)
+    const hitboxElDims = calcHitboxElDims(sliderRange)
+    const hitboxElStyle = hitboxElDims
     const updateHorSlider = useCallback(([ from, to ]) => {
         const [ fromMin, toMax ] = calcSliderRange(width, height).hor
         const x1 = Math.max(fromMin, from)
@@ -48,7 +72,7 @@ export default () => {
         const y2 = Math.min(to, toMax)
         importAxns.update({ id: activeSpriteID, hitboxSlider: { ...sliderRange, vert: [ y1, y2 ]}})
     }, [ activeSpriteID ])
-    
+
     return (
         <div>
             <h3>
@@ -56,10 +80,11 @@ export default () => {
             </h3>
             <Space>
                 <Space direction="vertical">
-                   <div className={styles.hitboxEditor}>
+                   <div className={styles.hitboxEditor} style={hitboxEditorStyle}>
                         <Slider className={styles.hSlider} style={sliderStyles.hor} range={{draggableTrack: true}} value={sliderRange.hor} onChange={updateHorSlider} disabled={inputsDisabled}/>
-                        <Slider className={styles.vSlider} style={sliderStyles.vert } vertical range={{draggableTrack: true}} value={sliderRange.vert} onChange={updateVertSlider} disabled={inputsDisabled}/>
-                        <img className={styles.metaImage} src={spriteImg || placeholderImg}/>
+                        <Slider className={styles.vSlider} style={sliderStyles.vert } vertical range={{draggableTrack: true}} value={sliderRange.vert} onChange={updateVertSlider} disabled={inputsDisabled} reverse/>
+                        <img className={styles.metaImage} src={spriteImg || placeholderImg} style={hitboxEditorImgStyle}/>
+                        <div className={styles.hitbox} style={hitboxElStyle}></div>
                    </div>
                 </Space>
                 <Space direction="vertical">
