@@ -16,4 +16,5 @@ npm start
 * Web based GUI
 * 90 degrees rotation support
 * customizable margin support
-* multiple rect sorting functions to choose from (optimal choice depends on the set of input sprites)
+* Multiple rect sorting functions to choose from (optimal choice depends on the set of input sprites)
+* Hitbox Editor
