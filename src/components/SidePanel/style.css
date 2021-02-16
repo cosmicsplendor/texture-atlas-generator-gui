@@ -28,7 +28,7 @@
 
 .hitboxEditor>.hitbox {
     position: absolute;
-    border: 1px solid rgba(50, 115, 220, 0.6);
+    border: 2px solid rgba(50, 115, 220, 0.6);
     background: rgba(50, 115, 220, 0.2);
     width: 50px;
     height: 50px;
