@@ -1,6 +1,7 @@
 import { useContext, useMemo, useCallback } from "react"
 import { Space, Typography, Input, Select, Slider } from "antd"
 
+import { clamp } from "../../utils"
 import AppContext from ".././../AppContext"
 import placeholderImg from "../../images/placeholder.png"
 import styles from "./style.css"
@@ -23,7 +24,6 @@ const hitboxShapes = [ "Circle", "Rectangle"]
 const { Text } = Typography
 const { Option } = Select
 
-
 const calcSliderRange = (width, height) => {
     const max = Math.max(width, height)
     const sliderWidth = (width / max) * 100
@@ -35,8 +35,6 @@ const calcSliderRange = (width, height) => {
         vert: [ Math.round(sliderY), Math.round(sliderY + sliderHeight) ]
     }
 }
-
-
 
 const calcHitboxElDims = sliderRange => {
     const { hor: [ x1, x2 ], vert: [ y1, y2 ] } = sliderRange
@@ -61,17 +59,19 @@ export default () => {
     const hitboxElDims = calcHitboxElDims(sliderRange)
     const hitboxElStyle = hitboxElDims
     const updateHorSlider = useCallback(([ from, to ]) => {
-        const [ fromMin, toMax ] = calcSliderRange(width, height).hor
-        const x1 = Math.max(fromMin, from)
-        const x2 = Math.min(to, toMax)
-        importAxns.update({ id: activeSpriteID, hitboxSlider: { ...sliderRange, hor: [ x1, x2 ]}})
-    }, [ activeSpriteID ])
+        const [ min, max ] = calcSliderRange(width, height).hor
+        const x1 = clamp(min, max, from)
+        const x2 = clamp(min, max, to)
+        const newHor = [ Math.min(x1, x2), Math.max(x1, x2) ]
+        importAxns.update({ id: activeSpriteID, hitboxSlider: { ...sliderRange, hor: newHor } })
+    }, [ activeSpriteID, sliderRange ])
     const updateVertSlider = useCallback(([ from, to ]) => {
-        const [ fromMin, toMax ] = calcSliderRange(width, height).vert
-        const y1 = Math.max(fromMin, from)
-        const y2 = Math.min(to, toMax)
-        importAxns.update({ id: activeSpriteID, hitboxSlider: { ...sliderRange, vert: [ y1, y2 ]}})
-    }, [ activeSpriteID ])
+        const [ min, max ] = calcSliderRange(width, height).vert
+        const y1 = clamp(min, max, from)
+        const y2 = clamp(min, max, to)
+        const newVert = [ Math.min(y1, y2), Math.max(y1, y2) ]
+        importAxns.update({ id: activeSpriteID, hitboxSlider: { ...sliderRange, vert: newVert } })
+    }, [ activeSpriteID, sliderRange ])
 
     return (
         <div>

@@ -7,7 +7,7 @@
 }
 
 .sidePanel {
-    padding: 15px 20px;
+    padding: 10px 20px;
 }
 
 .axnBtn {
@@ -20,6 +20,7 @@
     align-items: center;
     justify-content: center;
     background: whitesmoke;
+    margin-right: 15px;
     padding: 15px;
     margin-top: 15px;
     border-radius: 15px;
@@ -27,8 +28,8 @@
 
 .hitboxEditor>.hitbox {
     position: absolute;
-    border: 4px solid rgba(50, 115, 220, 0.6);
-    background: rgba(50, 115, 220, 0.1);
+    border: 1px solid rgba(50, 115, 220, 0.6);
+    background: rgba(50, 115, 220, 0.2);
     width: 50px;
     height: 50px;
 }
