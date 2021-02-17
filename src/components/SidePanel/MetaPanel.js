@@ -36,7 +36,7 @@ const calcSliderRange = (width, height) => {
     }
 }
 
-const calcHitboxRectDims = sliderRange => {
+const calcHitboxRectBounds = sliderRange => {
     const { hor: [ x1, x2 ], vert: [ y1, y2 ] } = sliderRange
     const scaleFactor = HBOX_EDITOR_IMG_W / HBOX_SLIDER_W
     const offset = (HBOX_EDITOR_W - HBOX_EDITOR_IMG_W) / 2
@@ -56,8 +56,8 @@ export default () => {
     const inputsDisabled = !activeSpriteID
     const { src: spriteImg, name, width=150, height=150, hitboxSlider } = activeSprite
     const sliderRange = hitboxSlider || calcSliderRange(width, height)
-    const hitboxElDims = calcHitboxRectDims(sliderRange)
-    const hitboxElStyle = hitboxElDims
+    const hitboxElBounds = calcHitboxRectBounds(sliderRange)
+    const hitboxElStyle = hitboxElBounds
     const updateHorSlider = useCallback(([ from, to ]) => {
         const [ min, max ] = calcSliderRange(width, height).hor
         const x1 = clamp(min, max, from)

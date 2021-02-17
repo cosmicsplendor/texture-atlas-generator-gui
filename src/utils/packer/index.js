@@ -16,7 +16,7 @@ const calcAtlasHeight = rootNode => { // tail call optimized
 
 export default function pack({ rects: rawRects, sortingFn, rotationEnabled, margin }) {
     if (rawRects.length === 0) {
-        return { packedRects: [], dim: { width: 0, height: 0 } }
+        return { packedRects: [], bound: { width: 0, height: 0 } }
     }
 
     const occupyNode = (node, { w, h }) => {
@@ -48,6 +48,6 @@ export default function pack({ rects: rawRects, sortingFn, rotationEnabled, marg
 
     return {
         packedRects,
-        dim: { width: containerWidth, height: containerHeight }
+        bound: { width: containerWidth, height: containerHeight }
     }
 }
