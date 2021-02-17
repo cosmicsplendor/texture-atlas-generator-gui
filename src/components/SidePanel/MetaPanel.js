@@ -26,19 +26,19 @@ const { Option } = Select
 
 const calcSliderRange = (width, height) => {
     const max = Math.max(width, height)
-    const sliderWidth = (width / max) * 100
-    const sliderHeight = (height / max) * 100
-    const sliderX = (100 - sliderWidth) / 2
-    const sliderY = (100 - sliderHeight) / 2
+    const sliderWidth = (width / max) * HBOX_SLIDER_W
+    const sliderHeight = (height / max) * HBOX_SLIDER_W
+    const sliderX = (HBOX_SLIDER_W - sliderWidth) / 2
+    const sliderY = (HBOX_SLIDER_W - sliderHeight) / 2
     return {
-        hor: [ Math.round(sliderX), Math.round(sliderX + sliderWidth) ],
-        vert: [ Math.round(sliderY), Math.round(sliderY + sliderHeight) ]
+        hor: [ Math.floor(sliderX), Math.ceil(sliderX + sliderWidth) ],
+        vert: [ Math.floor(sliderY), Math.ceil(sliderY + sliderHeight) ]
     }
 }
 
-const calcHitboxElDims = sliderRange => {
+const calcHitboxRectDims = sliderRange => {
     const { hor: [ x1, x2 ], vert: [ y1, y2 ] } = sliderRange
-    const scaleFactor = HBOX_SLIDER_W / 100
+    const scaleFactor = HBOX_EDITOR_IMG_W / HBOX_SLIDER_W
     const offset = (HBOX_EDITOR_W - HBOX_EDITOR_IMG_W) / 2
     return {
         left: x1 * scaleFactor + offset,
@@ -56,7 +56,7 @@ export default () => {
     const inputsDisabled = !activeSpriteID
     const { src: spriteImg, name, width=150, height=150, hitboxSlider } = activeSprite
     const sliderRange = hitboxSlider || calcSliderRange(width, height)
-    const hitboxElDims = calcHitboxElDims(sliderRange)
+    const hitboxElDims = calcHitboxRectDims(sliderRange)
     const hitboxElStyle = hitboxElDims
     const updateHorSlider = useCallback(([ from, to ]) => {
         const [ min, max ] = calcSliderRange(width, height).hor
@@ -81,20 +81,55 @@ export default () => {
             <Space>
                 <Space direction="vertical">
                    <div className={styles.hitboxEditor} style={hitboxEditorStyle}>
-                        <Slider className={styles.hSlider} style={sliderStyles.hor} range={{draggableTrack: true}} value={sliderRange.hor} onChange={updateHorSlider} disabled={inputsDisabled}/>
-                        <Slider className={styles.vSlider} style={sliderStyles.vert } vertical range={{draggableTrack: true}} value={sliderRange.vert} onChange={updateVertSlider} disabled={inputsDisabled} reverse/>
-                        <img className={styles.metaImage} src={spriteImg || placeholderImg} style={hitboxEditorImgStyle}/>
-                        <div className={styles.hitbox} style={hitboxElStyle}></div>
+                        <Slider 
+                            className={styles.hSlider} 
+                            style={sliderStyles.hor} 
+                            range={{draggableTrack: true}} 
+                            value={sliderRange.hor} 
+                            onChange={updateHorSlider} 
+                            disabled={inputsDisabled}
+                            min={0}
+                            max={HBOX_SLIDER_W}
+                        />
+                        <Slider 
+                            className={styles.vSlider} 
+                            style={sliderStyles.vert } 
+                            vertical 
+                            range={{draggableTrack: true}} 
+                            value={sliderRange.vert} 
+                            onChange={updateVertSlider} 
+                            disabled={inputsDisabled} 
+                            reverse
+                            min={0}
+                            max={HBOX_SLIDER_W}
+                        />
+                        <img 
+                            className={styles.metaImage} 
+                            src={spriteImg || placeholderImg} 
+                            style={hitboxEditorImgStyle}
+                        />
+                        <div className={styles.hitbox} style={hitboxElStyle}/>
                    </div>
                 </Space>
                 <Space direction="vertical">
                         <Space direction="vertical">
-                            <Text type="secondary">Sprite Name</Text>
-                            <Input className={styles.input} value={name} placeholder="not selected" onChange={e => importAxns.update({ id: activeSpriteID, name: e.target.value })} disabled={inputsDisabled}/>
+                            <Text type="secondary">Texture Name</Text>
+                            <Input 
+                                className={styles.input} 
+                                value={name} placeholder="not selected" 
+                                onChange={e => importAxns.update({ id: activeSpriteID, name: e.target.value })} 
+                                disabled={inputsDisabled}
+                            />
                         </Space>
                         <Space direction="vertical">
                             <Text type="secondary">Hitbox Shape</Text>
-                            <Select value={hitboxShapes[1]} className={styles.select} onChange={value => {/* updateSettings({ sortingFn: value }) */}} size="large" disabled={inputsDisabled}>
+                            <Select 
+                                value={hitboxShapes[1]} 
+                                className={styles.select} 
+                                onChange={value => {/* updateSettings({ sortingFn: value }) */}} 
+                                size="large" 
+                                disabled={inputsDisabled}
+                            >
                                 {hitboxShapes.map((name, i) => <Option key={i} value={name}>{name}</Option>)}
                             </Select>
                         </Space>
