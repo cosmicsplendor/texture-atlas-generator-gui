@@ -5,7 +5,6 @@ import App from "./components/App"
 import AppContext from "./AppContext"
 import useImport from "./hooks/useImports"
 import useSettings from "./hooks/useSettings"
-import "./style.css"
 
 const AppContainer = () => {
     const [ activeSprite, setActiveSprite ] = useState("")

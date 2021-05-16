@@ -5,7 +5,8 @@
   "private": true,
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "webpack serve --open --watch"
+    "start": "webpack serve --open --watch",
+    "build": "webpack --mode=production"
   },
   "keywords": [],
   "author": "",
