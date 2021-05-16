@@ -1,8 +1,9 @@
-import { PageHeader, Button, Tag } from "antd"
+import { PageHeader, Tag } from "antd"
 
 import Canvas from "./Canvas"
 import SidePanel from "./SidePanel"
 import ImportPanel from "./ImportPanel"
+import ClearBtn from "./ClearBtn"
 import styles from "./style.css"
 
 const  App = () => {
@@ -16,9 +17,7 @@ const  App = () => {
                 subTitle="made with"
                 tags={<Tag color="blue">React.js</Tag>}
                 extra={
-                    <Button type="danger">
-                        Clear App
-                    </Button>
+                    <ClearBtn />
                 }
                 className={styles.appbar}
             />

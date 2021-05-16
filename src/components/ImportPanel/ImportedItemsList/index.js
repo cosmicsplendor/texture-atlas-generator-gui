@@ -1,4 +1,4 @@
-import { useContext } from "react"
+import { useContext, useMemo } from "react"
 
 import AppContext from "../../../AppContext"
 import ImportedItem from "./ImportedItem"
@@ -6,7 +6,6 @@ import styles from "../style.css"
 
 export default () => {
     const { imports } = useContext(AppContext)
-
     return (
         <>
             { 

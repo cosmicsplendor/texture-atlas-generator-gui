@@ -70,7 +70,9 @@ const texAtlas = { // singleton object
                     .querySelector(`#${PREVIEW_ID}`)
                     .setAttribute("src", URL.createObjectURL(blob))
             })
-            .catch(e => console.log(`Error:\n${e.message}`))
+            .catch(e => {
+                // console.log(`Error:\n${e.message}`)
+            })
 
         this._meta = packedTextures
     },
