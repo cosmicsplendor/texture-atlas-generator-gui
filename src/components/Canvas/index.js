@@ -22,7 +22,6 @@ export default () => {
         texAtlas
             .applySettings(settings)
             .render(imports)
-        console.log("rerendering")
     }, [ settings.sortingFn, settings.rotationEnabled, settings.margin, imports.length ])
 
     return (

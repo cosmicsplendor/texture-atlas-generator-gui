@@ -1,5 +1,5 @@
 import { useContext, useMemo, useCallback } from "react"
-import { Space, Typography, Input, Select, Slider } from "antd"
+import { Space, notification, Typography, Input, Select, Slider } from "antd"
 
 import { clamp } from "../../utils"
 import AppContext from ".././../AppContext"
@@ -13,7 +13,7 @@ const sliderStyles = {
 }
 const hitboxEditorStyle = {
     width: HBOX_EDITOR_W,
-    height: HBOX_EDITOR_W
+    height: HBOX_EDITOR_W 
 }
 const hitboxEditorImgStyle = {
     width: HBOX_EDITOR_IMG_W,
@@ -117,7 +117,20 @@ export default () => {
                             <Input 
                                 className={styles.input} 
                                 value={name} placeholder="not selected" 
-                                onChange={e => importAxns.update({ id: activeSpriteID, name: e.target.value })} 
+                                onChange={e => {
+                                    const newName = e.target.value
+                                    const duplicate = !!imports.some(({ name }) => {
+                                        return name === newName
+                                    })
+                                    if (duplicate) {
+                                        notification.open({
+                                            message: "Clashing Names",
+                                            description: `"${newName}" clashes with the name of one of the imported textures. Name field has to be unique.`
+                                        })
+                                        return
+                                    }
+                                    importAxns.update({ id: activeSpriteID, name: newName})
+                                }} 
                                 disabled={inputsDisabled}
                             />
                         </Space>

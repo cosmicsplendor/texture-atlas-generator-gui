@@ -10,7 +10,6 @@ export default () => {
                 const newImport = {
                     id: v4(),
                     ...payload,
-                    name: payload.name.replace(/\..+/, "")
                 }
                 return [ newImport, ...prevImports ]
             case importAxnTypes.update:

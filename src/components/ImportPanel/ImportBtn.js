@@ -1,4 +1,5 @@
 import { useCallback, useContext } from "react"
+import { notification } from "antd"
 import { PlusOutlined } from "@ant-design/icons"
 
 import AppContext from "../../AppContext"
@@ -14,7 +15,7 @@ const readFile = file => {
             tempImg.src = result
 
             tempImg.onload = () => {
-                resolve({ name: file.name, src: result, width: tempImg.width, height: tempImg.height })
+                resolve({ name: file.name.replace(/\..+/, "").trim(), originalName: file.name, src: result, width: tempImg.width, height: tempImg.height })
             }
         }
         reader.onerror = reject
@@ -23,14 +24,24 @@ const readFile = file => {
 }
 
 export default () => {
-    const { importAxns } = useContext(AppContext)
+    const { importAxns, imports } = useContext(AppContext)
 
     const onNewFiles = useCallback(async e => {
         for (const file of e.target.files) {
             const newImport = await readFile(file)
+            const duplicate = !!imports.some(({ name }) => {
+                return name === newImport.name
+            })
+            if (duplicate) {
+                notification.open({
+                    message: "Duplicate Import",
+                    description: `Attempting to import a duplicate image or an image with the filename that clashes with one of the already imported images: "${newImport.originalName}"`
+                })
+                return
+            }
             importAxns.add(newImport)
         }
-    }, [])
+    }, [ imports ])
 
     return (
        <>
