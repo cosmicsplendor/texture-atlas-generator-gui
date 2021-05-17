@@ -19,7 +19,8 @@ const hitboxEditorImgStyle = {
     width: HBOX_EDITOR_IMG_W,
     height: HBOX_EDITOR_IMG_W
 }
-const hitboxShapes = [ "Circle", "Rectangle"]
+const [ CIRCLE, RECTANGLE ] = [ "CIRCLE", "RECTANGLE" ]
+const hitshapes = [ CIRCLE, RECTANGLE ]
 
 const { Text } = Typography
 const { Option } = Select
@@ -54,19 +55,46 @@ export default () => {
         return imports.find(({ id }) => activeSpriteID === id) || {}
     }, [ activeSpriteID, imports ])
     const inputsDisabled = !activeSpriteID
-    const { src: spriteImg, name, width=150, height=150, hitboxSlider } = activeSprite
-    const sliderRange = hitboxSlider || calcSliderRange(width, height)
-    const hitboxElBounds = calcHitboxRectBounds(sliderRange)
-    const hitboxElStyle = hitboxElBounds
-    const updateHorSlider = useCallback(([ from, to ]) => {
-        const [ min, max ] = calcSliderRange(width, height).hor
-        const x1 = clamp(min, max, from)
-        const x2 = clamp(min, max, to)
+    const { src: spriteImg, name, width=150, height=150, hitboxSlider, hitshape = RECTANGLE } = activeSprite
+    const sliderRange = hitboxSlider || calcSliderRange(width, height, hitshape)
+    const hitboxElBounds = calcHitboxRectBounds(sliderRange, hitshape)
+    const hitboxElStyle = { ...hitboxElBounds, borderRadius: hitshape === RECTANGLE ? 0: "50%" }
+    const updateHorSlider = useCallback(([ from, to ], hitshape) => {
+        const { hor: [ min, max ], vert: [ minV, maxV ]} = calcSliderRange(width, height)
+        if (hitshape === RECTANGLE) {
+            const x1 = clamp(min, max, from)
+            const x2 = clamp(min, max, to)
+            const newHor = [ Math.min(x1, x2), Math.max(x1, x2) ]
+            importAxns.update({ id: activeSpriteID, hitboxSlider: { ...sliderRange, hor: newHor }, hitshape })
+            return
+        }
+        const draggedLeftEnd = sliderRange.hor[0] !== from ? true: false
+        const maxRadius = Math.min( max - min, maxV - minV)
+        const x1 = draggedLeftEnd ? Math.max(clamp(min, max, from), to - maxRadius): from
+        const x2 = !draggedLeftEnd ? Math.min(clamp(min, max, to), from + maxRadius): to
         const newHor = [ Math.min(x1, x2), Math.max(x1, x2) ]
-        importAxns.update({ id: activeSpriteID, hitboxSlider: { ...sliderRange, hor: newHor } })
-    }, [ activeSpriteID, sliderRange ])
-    const updateVertSlider = useCallback(([ from, to ]) => {
+        const vertRadius = (x2 - x1) / 2
+        const vertCenter = (sliderRange.vert[1] + sliderRange.vert[0] ) / 2
+        let y1 = vertCenter - vertRadius
+        let y2 = vertCenter + vertRadius
+        if (y2 > maxV) { // wrap around
+            y1 += maxV - y2
+            y2 = maxV
+        } else if (y1 < minV) {
+            y2 += minV - y1
+            y1 = minV
+        }
+        const newVert = [ y1, y2 ]
+        importAxns.update({ id: activeSpriteID, hitboxSlider: { vert: newVert, hor: newHor }, hitshape })
+    }, [ activeSpriteID, sliderRange, hitshape ])
+    const updateVertSlider = useCallback(([ from, to ], hitshape) => {
         const [ min, max ] = calcSliderRange(width, height).vert
+        const draggedBothEnds = sliderRange.vert[0] !== from && sliderRange.vert[1] !== to
+        if (hitshape === CIRCLE) {
+            if (!draggedBothEnds || from < min || to > max) {
+                return
+            }
+        }
         const y1 = clamp(min, max, from)
         const y2 = clamp(min, max, to)
         const newVert = [ Math.min(y1, y2), Math.max(y1, y2) ]
@@ -86,7 +114,7 @@ export default () => {
                             style={sliderStyles.hor} 
                             range={{draggableTrack: true}} 
                             value={sliderRange.hor} 
-                            onChange={updateHorSlider} 
+                            onChange={arg => updateHorSlider(arg, hitshape)} 
                             disabled={inputsDisabled}
                             min={0}
                             max={HBOX_SLIDER_W}
@@ -97,7 +125,7 @@ export default () => {
                             vertical 
                             range={{draggableTrack: true}} 
                             value={sliderRange.vert} 
-                            onChange={updateVertSlider} 
+                            onChange={arg => updateVertSlider(arg, hitshape)} 
                             disabled={inputsDisabled} 
                             reverse
                             min={0}
@@ -137,13 +165,15 @@ export default () => {
                         <Space direction="vertical">
                             <Text type="secondary">Hitbox Shape</Text>
                             <Select 
-                                value={hitboxShapes[1]} 
+                                value={hitshape} 
                                 className={styles.select} 
-                                onChange={value => {/* updateSettings({ sortingFn: value }) */}} 
+                                onChange={value => {
+                                    updateHorSlider([ 0, 150 ], value)
+                                }} 
                                 size="large" 
                                 disabled={inputsDisabled}
                             >
-                                {hitboxShapes.map((name, i) => <Option key={i} value={name}>{name}</Option>)}
+                                {hitshapes.map((name, i) => <Option key={i} value={name}>{name}</Option>)}
                             </Select>
                         </Space>
                     </Space>
