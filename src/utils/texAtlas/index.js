@@ -76,12 +76,13 @@ const texAtlas = { // singleton object
 
         this._meta = packedTextures
     },
-    getMeta(format) {
+    getMeta(format, circle=false) {
         switch(format) {
             case "Hash":
                 return this._meta.reduce((acc, cur) => {
                     const { name, pos, rotation, width, height, hitbox } = cur
                     acc[name] = { ...pos, rotation, width, height, hitbox }
+                    
                     return acc
                 }, {})
             case "Array":

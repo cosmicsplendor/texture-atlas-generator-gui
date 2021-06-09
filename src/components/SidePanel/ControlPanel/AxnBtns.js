@@ -37,7 +37,7 @@ export default () => {
             </Button>
             <Button type="primary" danger onClick={downloadMeta}> 
                 <DownloadOutlined />
-                <span>JSON</span>
+                <span>Data</span>
             </Button>
         </Space>
     )
