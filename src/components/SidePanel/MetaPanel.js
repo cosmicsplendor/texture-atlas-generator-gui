@@ -1,12 +1,12 @@
-import { useContext, useMemo, useCallback } from "react"
-import { Space, notification, Typography, Input, Select, Slider } from "antd"
+import { useContext, useMemo, useCallback, useRef } from "react"
+import { Space, notification, Typography, Input, Select, Slider, Switch } from "antd"
 
 import { clamp } from "../../utils"
 import AppContext from ".././../AppContext"
 import placeholderImg from "../../images/placeholder.png"
 import styles from "./style.css"
 import { HBOX_SLIDER_W, HBOX_EDITOR_W, HBOX_EDITOR_IMG_W } from "../../constants"
-
+const HBOX_EDITOR_IMG_OFFSET = (HBOX_EDITOR_W - HBOX_EDITOR_IMG_W) / 2
 const sliderStyles = {
     hor: { width: HBOX_SLIDER_W },
     vert: { height: HBOX_SLIDER_W }
@@ -51,11 +51,12 @@ const calcHitboxRectBounds = sliderRange => {
 
 export default () => {
     const { activeSprite: activeSpriteID, imports, importAxns } = useContext(AppContext)
+    const hbEditorRef = useRef()
     const activeSprite = useMemo(() => {
         return imports.find(({ id }) => activeSpriteID === id) || {}
     }, [ activeSpriteID, imports ])
     const inputsDisabled = !activeSpriteID
-    const { src: spriteImg, name, width=150, height=150, hitboxSlider, hitshape = RECTANGLE } = activeSprite
+    const { src: spriteImg, name, width=150, height=150, hitboxSlider, hitshape=RECTANGLE, anchor=false, anchorPoint={ x: HBOX_EDITOR_IMG_OFFSET + HBOX_EDITOR_IMG_W / 2, y: HBOX_EDITOR_IMG_OFFSET + HBOX_EDITOR_IMG_W / 2 } } = activeSprite
     const sliderRange = hitboxSlider || calcSliderRange(width, height, hitshape)
     const hitboxElBounds = calcHitboxRectBounds(sliderRange, hitshape)
     const hitboxElStyle = { ...hitboxElBounds, borderRadius: hitshape === RECTANGLE ? 0: "50%" }
@@ -100,7 +101,15 @@ export default () => {
         const newVert = [ Math.min(y1, y2), Math.max(y1, y2) ]
         importAxns.update({ id: activeSpriteID, hitboxSlider: { ...sliderRange, vert: newVert } })
     }, [ activeSpriteID, sliderRange ])
-
+    const setAnchorPoint = useCallback(function(e) {
+        if (!anchor) {
+            return
+        }
+        const { x: originX, y: originY } = hbEditorRef.current.getBoundingClientRect()
+        const x = e.clientX - originX
+        const y = e.clientY - originY
+        importAxns.update({ id: activeSpriteID, anchorPoint: { x, y } })
+    }, [ anchor, activeSpriteID ])
     return (
         <div>
             <h3>
@@ -108,7 +117,7 @@ export default () => {
             </h3>
             <Space>
                 <Space direction="vertical">
-                   <div className={styles.hitboxEditor} style={hitboxEditorStyle}>
+                   <div className={styles.hitboxEditor} style={hitboxEditorStyle} onMouseDown={setAnchorPoint} ref={hbEditorRef}>
                         <Slider 
                             className={styles.hSlider} 
                             style={sliderStyles.hor} 
@@ -137,6 +146,7 @@ export default () => {
                             style={hitboxEditorImgStyle}
                         />
                         <div className={styles.hitbox} style={hitboxElStyle}/>
+                        { !!anchor  ? <div className={styles.anchorPoint} style={{ left: anchorPoint.x - 3, top: anchorPoint.y - 3 }}/>: null }
                    </div>
                 </Space>
                 <Space direction="vertical">
@@ -176,6 +186,12 @@ export default () => {
                                 {hitshapes.map((name, i) => <Option key={i} value={name}>{name}</Option>)}
                             </Select>
                         </Space>
+                        <div>
+                            <Space>
+                                <Text type="secondary">Anchor Point</Text>
+                                <Switch checked={anchor} onChange={checked => importAxns.update({ id: activeSpriteID, anchor: checked })} disabled={inputsDisabled}/>
+                            </Space>
+                        </div>
                     </Space>
             </Space>
         </div>

@@ -35,6 +35,15 @@
     height: 50px;
 }
 
+.hitboxEditor>.anchorPoint {
+    position: absolute;
+    box-sizing: border-box;
+    border-radius: 50%;
+    background: red;
+    width: 6px;
+    height: 6px;
+}
+
 .hitboxEditor>.hSlider {
     position: absolute; 
     top: -15px; 
