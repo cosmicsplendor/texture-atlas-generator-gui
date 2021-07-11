@@ -106,8 +106,9 @@ export default () => {
             return
         }
         const { x: originX, y: originY } = hbEditorRef.current.getBoundingClientRect()
-        const x = e.clientX - originX
-        const y = e.clientY - originY
+        const x = clamp(HBOX_EDITOR_IMG_OFFSET, HBOX_EDITOR_W - HBOX_EDITOR_IMG_OFFSET, e.clientX - originX)
+        const y = clamp(HBOX_EDITOR_IMG_OFFSET, HBOX_EDITOR_W - HBOX_EDITOR_IMG_OFFSET, e.clientY - originY)
+        console.log({ x, y })
         importAxns.update({ id: activeSpriteID, anchorPoint: { x, y } })
     }, [ anchor, activeSpriteID ])
     return (
