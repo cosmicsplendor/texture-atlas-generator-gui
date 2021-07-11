@@ -12,7 +12,7 @@ export default () => {
 
     const downloadMeta = useCallback(() => {
         if (imports.length === 0) return
-        const body = JSON.stringify(texAtlas.getMeta(metaFormat), null, 4)
+        const body = JSON.stringify(texAtlas.getMeta(metaFormat, imports), null, 4)
         download.text({ 
             body, name: `atlasmeta-${Date.now()}`, 
             format: "json"

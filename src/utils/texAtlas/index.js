@@ -2,25 +2,43 @@ import Node from "./entities/Node"
 import Canvas2DRenderer from "./renderer/Canvas2D"
 import Texture from "./entities/core/Texture"
 import packRects from "../packer"
-import { PREVIEW_ID, HBOX_SLIDER_W } from "../../constants"
+import { PREVIEW_ID, HBOX_EDITOR_W, HBOX_EDITOR_IMG_W, HBOX_SLIDER_W } from "../../constants"
 
-const spriteToTexture = ({ src, name, id, hitboxSlider }) => {
+const HBOX_EDITOR_IMG_OFFSET = (HBOX_EDITOR_W - HBOX_EDITOR_IMG_W) / 2
+
+const spriteToTexture = sprite => {
+    const { src, name, id, hitboxSlider, anchor, anchorPoint, hitboxShape } = sprite
     const tex = new Texture({ imgUrl: src })
     tex.width = tex.img.width
     tex.height = tex.img.height
     tex.name = name.replace("\..+$", "")
+    const { round, max } = Math
+    if (anchor) {
+        const maxDim = max(width, height)
+        tex.anchorPoint = {
+            x: round(maxDim * (tex.anchorPoint.x - HBOX_EDITOR_IMG_OFFSET) / HBOX_EDITOR_IMG_W),
+            y: round(maxDim * (tex.anchorPoint.y - HBOX_EDITOR_IMG_OFFSET) / HBOX_EDITOR_IMG_W)
+        }
+    }
     if (!!hitboxSlider) {
         const { hor: [ x1, x2 ], vert: [ y1, y2 ] } = hitboxSlider
         const { width, height } = tex
-        const { round } = Math
-        const maxDim = Math.max(width, height)
+        const maxDim = max(width, height)
         const offsetX = - (maxDim - width) / 2
         const offsetY = - (maxDim - height) / 2
         tex.hitbox = {
-            x: round(x1 * width / HBOX_SLIDER_W) + offsetX,
-            y: round(y1 * height / HBOX_SLIDER_W) + offsetY,
-            width: round((x2 - x1) * width / HBOX_SLIDER_W),
-            height: round((y2 - y1) * height / HBOX_SLIDER_W)
+            x: round(maxDim * x1 / HBOX_SLIDER_W) + offsetX,
+            y: round(maxDim * y1 / HBOX_SLIDER_W) + offsetY,
+            width: round(maxDim * (x2 - x1)  / HBOX_SLIDER_W),
+            height: round(maxDim * (y2 - y1) / HBOX_SLIDER_W)
+        }
+        if (hitboxShape === "CIRCLE") {
+            tex.hitCirc = {
+                x: tex.hitbox.x,
+                y: tex.hitbox.y,
+                radius: round(tex.hitbox.width / 2)
+            }
+            delete tex.hitbox
         }
     }
     tex.id = id
@@ -28,7 +46,6 @@ const spriteToTexture = ({ src, name, id, hitboxSlider }) => {
 }
 
 const texAtlas = { // singleton object
-    _meta: null,
     atlas: null,
     config: {},
     renderer: null,
@@ -74,19 +91,19 @@ const texAtlas = { // singleton object
                 // console.log(`Error:\n${e.message}`)
             })
 
-        this._meta = packedTextures
+        return packedTextures
     },
-    getMeta(format, circle=false) {
+    getMeta(format, sprites) {
         switch(format) {
             case "Hash":
-                return this._meta.reduce((acc, cur) => {
-                    const { name, pos, rotation, width, height, hitbox } = cur
-                    acc[name] = { ...pos, rotation, width, height, hitbox }
+                return this.render(sprites).reduce((acc, cur) => {
+                    const { name, pos, rotation, width, height, hitbox, hitCirc, anchorPoint } = cur
+                    acc[name] = { ...pos, rotation, width, height, hitbox, hitCirc, anchor: anchorPoint }
                     
                     return acc
                 }, {})
             case "Array":
-                return this._meta.map(({ name, pos, rotation, width, height }) => ({
+                return this.render(sprites).map(({ name, pos, rotation, width, height }) => ({
                     name, ...pos, rotation, width, height
                 }))
             break
