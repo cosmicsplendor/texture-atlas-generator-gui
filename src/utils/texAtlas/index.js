@@ -107,8 +107,8 @@ const texAtlas = { // singleton object
                     return acc
                 }, {})
             case "Array":
-                return this.render(sprites).map(({ name, pos, rotation, width, height }) => ({
-                    name, ...pos, rotation, width, height
+                return this.render(sprites).map(({ name, pos, rotation, width, height, hitbox, hitCirc, anchorPoint }) => ({
+                    name, ...pos, rotation, width, height, hitbox, hitCirc, anchor: anchorPoint
                 }))
             break
         }
