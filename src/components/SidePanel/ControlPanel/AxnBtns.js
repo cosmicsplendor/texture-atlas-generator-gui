@@ -14,8 +14,8 @@ export default () => {
         if (imports.length === 0) return
         const body = JSON.stringify(texAtlas.getMeta(metaFormat, imports), null, 4)
         download.text({ 
-            body, name: `atlasmeta-${Date.now()}`, 
-            format: "json"
+            body, name: "atlasmeta", 
+            format: "cson"
         })
     }, [ imports, metaFormat ])
     
@@ -24,7 +24,7 @@ export default () => {
         download.canvas({ 
             canvas: texAtlas.renderer.canvas, 
             offscreen: true, 
-            name: `texatlas-${Date.now()}`, 
+            name: "texatlas", 
             format: "png"
         })
     }, [ imports, metaFormat ])
