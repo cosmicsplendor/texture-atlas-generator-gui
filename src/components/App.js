@@ -15,7 +15,7 @@ const  App = () => {
                 onBack={() => {}}
                 title="Texture Atlas Generator GUI"
                 subTitle="made with ❤️ by"
-                tags={<Tag color="blue"><a style={{color: "#1890ff"}} href="https://twitter.com/UmeshKC60030736" target="_blank">Umesh KC</a></Tag>}
+                tags={<Tag color="blue"><a style={{color: "#1890ff"}} href="https://twitter.com/frigidelixir" target="_blank">Umesh KC</a></Tag>}
                 extra={
                     <ClearBtn />
                 }
