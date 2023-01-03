@@ -15,7 +15,7 @@ export default () => {
         const body = JSON.stringify(texAtlas.getMeta(metaFormat, imports))
         download.text({ 
             body, name: "atlasmeta", 
-            format: "cson"
+            format: "json"
         })
     }, [ imports, metaFormat ])
     
