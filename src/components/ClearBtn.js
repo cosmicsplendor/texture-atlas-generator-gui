@@ -9,7 +9,7 @@ const ClearApp = () => {
         importAxns.clear()
     }, [])
     return (
-        <Button onClick={clickHandler} type="danger"> Clear </Button>
+        <Button onClick={clickHandler} type={"ghost"}> Clear </Button>
     )
 }
 

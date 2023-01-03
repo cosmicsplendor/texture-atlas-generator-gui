@@ -85,7 +85,8 @@
 }
 
 .noImportsMsg {
-    font-size: 1.5em;
+    margin-left: 1em;
+    font-size: 1.2em;
     font-weight: 600;
-    color: #666;
+    color: #777;
 }

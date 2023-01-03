@@ -147,7 +147,7 @@ export default () => {
                             style={hitboxEditorImgStyle}
                         />
                         <div className={styles.hitbox} style={hitboxElStyle}/>
-                        { !!anchor  ? <div className={styles.anchorPoint} style={{ left: anchorPoint.x - 3, top: anchorPoint.y - 3 }}/>: null }
+                        { !!anchor  ? <div className={styles.anchorPoint} style={{ left: anchorPoint.x - 6, top: anchorPoint.y - 6 }}/>: null }
                    </div>
                 </Space>
                 <Space direction="vertical">
@@ -189,7 +189,7 @@ export default () => {
                         </Space>
                         <div>
                             <Space>
-                                <Text type="secondary">Anchor Point</Text>
+                                <Text type="secondary">Pivot Point</Text>
                                 <Switch checked={anchor} onChange={checked => importAxns.update({ id: activeSpriteID, anchor: checked })} disabled={inputsDisabled}/>
                             </Space>
                         </div>

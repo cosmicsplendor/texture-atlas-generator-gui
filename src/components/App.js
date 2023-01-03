@@ -14,8 +14,8 @@ const  App = () => {
                 backIcon=""
                 onBack={() => {}}
                 title="Texture Atlas Generator GUI"
-                subTitle="made with"
-                tags={<Tag color="blue">React.js</Tag>}
+                subTitle="made with ❤️ by"
+                tags={<Tag color="blue"><a style={{color: "#1890ff"}} href="https://twitter.com/UmeshKC60030736" target="_blank">Umesh KC</a></Tag>}
                 extra={
                     <ClearBtn />
                 }

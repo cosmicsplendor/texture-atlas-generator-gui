@@ -102,13 +102,13 @@ const texAtlas = { // singleton object
             case "Hash":
                 return this.render(sprites).reduce((acc, cur) => {
                     const { name, pos, rotation, width, height, hitbox, hitCirc, anchorPoint } = cur
-                    acc[name] = { ...pos, rotation, width, height, hitbox, hitCirc, marker: anchorPoint }
+                    acc[name] = { ...pos, rotation, width, height, hitbox, hitCirc, pivot: anchorPoint }
                     
                     return acc
                 }, {})
             case "Array":
                 return this.render(sprites).map(({ name, pos, rotation, width, height, hitbox, hitCirc, anchorPoint }) => ({
-                    name, ...pos, rotation, width, height, hitbox, hitCirc, marker: anchorPoint
+                    name, ...pos, rotation, width, height, hitbox, hitCirc, pivot: anchorPoint
                 }))
             break
         }
