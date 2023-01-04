@@ -7,11 +7,14 @@ export default () => {
         const { type, payload } = action
         switch(type) {
             case importAxnTypes.add:
-                const newImport = {
-                    id: v4(),
-                    ...payload,
-                }
-                return [ newImport, ...prevImports ]
+                const rawImports = Array.isArray(payload) ? payload: [ payload ]
+                const newImports = rawImports.map(imp => {
+                    return {
+                        id: v4(),
+                        ...imp,
+                    }
+                })
+                return [ ...newImports, ...prevImports ]
             case importAxnTypes.update:
                 return prevImports.map(imp => imp.id === payload.id ? { ...imp, ...payload }: imp)
             case importAxnTypes.remove:

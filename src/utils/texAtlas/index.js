@@ -49,6 +49,26 @@ const spriteToTexture = sprite => {
     return tex
 }
 
+const computePreviewImgWidth = (containerBounds, imgBounds) => {
+    const { width: cwidth, height: cheight } = containerBounds
+    const { width, height } = imgBounds
+    const needsResizing = cwidth <= width || cheight <= width
+    if (!needsResizing) return [ width, height ]
+    const caspect = cwidth / cheight
+    const aspect = width / height
+
+    if (caspect > aspect) {
+        return [
+            cheight * aspect,
+            cheight
+        ]
+    }
+    return [
+        cwidth,
+        cwidth / aspect
+    ]
+}
+
 const texAtlas = { // singleton object
     atlas: null,
     config: {},
@@ -78,21 +98,31 @@ const texAtlas = { // singleton object
         packedTextures.forEach(tex => {
             atlas.add(tex)
         })
-
+        
         renderer.canvas.width = bound.width
         renderer.canvas.height = bound.height
         renderer.renderRecursively()
 
         // sync with the preview
+        const previewImg = document
+            .querySelector(`#${PREVIEW_ID}`)
+        previewImg.setAttribute("width", 0)
+        previewImg.setAttribute("height", 0)
         renderer.canvas
             .convertToBlob()
             .then(blob => {
-                document
-                    .querySelector(`#${PREVIEW_ID}`)
-                    .setAttribute("src", URL.createObjectURL(blob))
+                previewImg.setAttribute("src", URL.createObjectURL(blob))
+                this.previewContainerBounds = this.previewContainerBounds ?? previewImg.parentElement.getBoundingClientRect()
+                const onLoad = () => {
+                    const [ width, height ]= computePreviewImgWidth(this.previewContainerBounds, bound)
+                    previewImg.width = width
+                    previewImg.height = height
+                }
+                previewImg.onload = onLoad
             })
             .catch(e => {
                 // console.log(`Error:\n${e.message}`)
+                previewImg.setAttribute("src", null)
             })
 
         return packedTextures

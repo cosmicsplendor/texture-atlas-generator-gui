@@ -27,6 +27,7 @@ export default () => {
     const { importAxns, imports } = useContext(AppContext)
 
     const onNewFiles = useCallback(async e => {
+        const newImports = []
         for (const file of e.target.files) {
             const newImport = await readFile(file)
             const duplicate = !!imports.some(({ name }) => {
@@ -38,9 +39,10 @@ export default () => {
                     description: `Attempting to import a duplicate image or an image with the filename that clashes with one of the already imported images: "${newImport.originalName}"`
                 })
             } else {
-                importAxns.add(newImport)
+                newImports.push(newImport)
             }
         }
+        importAxns.add(newImports)
         e.target.value = null
     }, [ imports ])
 
