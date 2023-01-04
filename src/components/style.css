@@ -6,7 +6,7 @@
 }
 .preview {
     flex: 1;
-    background: darkgray;
+    background: #333;
 }
 .previewImg {
     background: transparent;
