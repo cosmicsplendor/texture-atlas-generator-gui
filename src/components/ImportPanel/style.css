@@ -16,9 +16,9 @@
     padding: 5px;
 }
 
-.importsContainer::-webkit-scrollbar {
+/* .importsContainer::-webkit-scrollbar {
     display: none;
-}
+} */
 
 .importPanelItem {
     height: 80px;

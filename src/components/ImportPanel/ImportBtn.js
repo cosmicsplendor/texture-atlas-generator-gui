@@ -37,10 +37,11 @@ export default () => {
                     message: "Duplicate Import",
                     description: `Attempting to import a duplicate image or an image with the filename that clashes with one of the already imported images: "${newImport.originalName}"`
                 })
-                return
+            } else {
+                importAxns.add(newImport)
             }
-            importAxns.add(newImport)
         }
+        e.target.value = null
     }, [ imports ])
 
     return (

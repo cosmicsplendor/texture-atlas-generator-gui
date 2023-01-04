@@ -5,7 +5,9 @@ import ImportedItem from "./ImportedItem"
 import styles from "../style.css"
 
 export default () => {
-    const { imports } = useContext(AppContext)
+    const { imports, setActiveSprite } = useContext(AppContext)
+    console.log(imports)
+    
     return (
         <>
             { 

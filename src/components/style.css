@@ -15,7 +15,7 @@
     background: url(http://localhost:8080/assets/66f9d09ed7ad3740571c493492e4ade7.png);
     background-size: contain;
     background-repeat: repeat;
-    padding: 0.25em;
+    padding: 0.125em 0 0 0.125em;
 }
 .appbar {
     width: 90%;
