@@ -10,13 +10,13 @@ export default () => {
     const { settings, imports } = useContext(AppContext)
     const previewContainerRef = useRef()
     
-    useEffect(() => {
-        const previewContainer = previewContainerRef.current
-        const previewImage = previewContainer.querySelector(`#${PREVIEW_ID}`)
-        const { width, height } = previewContainer.getBoundingClientRect()
-        previewImage.width = width
-        previewImage.height = height
-    }, [])
+    // useEffect(() => {
+    //     const previewContainer = previewContainerRef.current
+    //     // const previewImage = previewContainer.querySelector(`#${PREVIEW_ID}`)
+    //     // const { width, height } = previewContainer.getBoundingClientRect()
+    //     // previewImage.width = width
+    //     // previewImage.height = height
+    // }, [])
 
     useEffect(() => {
         texAtlas
