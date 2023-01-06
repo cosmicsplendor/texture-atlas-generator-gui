@@ -112,9 +112,9 @@ const texAtlas = { // singleton object
             .convertToBlob()
             .then(blob => {
                 previewImg.setAttribute("src", URL.createObjectURL(blob))
-                this.previewContainerBounds = this.previewContainerBounds ?? previewImg.parentElement.getBoundingClientRect()
+                const containerBounds = previewImg.parentElement.getBoundingClientRect()
                 const onLoad = () => {
-                    const [ width, height ]= computePreviewImgWidth(this.previewContainerBounds, bound)
+                    const [ width, height ]= computePreviewImgWidth(containerBounds, bound)
                     previewImg.width = width
                     previewImg.height = height
                 }
