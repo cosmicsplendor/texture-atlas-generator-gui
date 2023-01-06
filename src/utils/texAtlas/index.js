@@ -98,7 +98,6 @@ const texAtlas = { // singleton object
         packedTextures.forEach(tex => {
             atlas.add(tex)
         })
-        
         renderer.canvas.width = bound.width
         renderer.canvas.height = bound.height
         renderer.renderRecursively()
