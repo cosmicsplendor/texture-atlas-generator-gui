@@ -12,7 +12,7 @@
     background: transparent;
     object-fit: scale-down;
     object-position: 0 0;
-    background: url(http://localhost:8080/assets/66f9d09ed7ad3740571c493492e4ade7.png);
+    background: url("../images/checkerboard.png");
     background-size: contain;
     background-repeat: repeat;
 }
