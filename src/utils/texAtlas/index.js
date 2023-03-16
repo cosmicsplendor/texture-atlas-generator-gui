@@ -89,11 +89,11 @@ const texAtlas = { // singleton object
         this.atlas.children = []
         this.renderer.clear()
     },
-    render(sprites) {
+    async render(sprites) {
         const { atlas, config, renderer } = this
         this.clear()
         const textures = sprites.map(spriteToTexture)
-        const { packedRects: packedTextures, bound } = packRects({ rects: textures, ...config})
+        const { packedRects: packedTextures, bound } = await packRects({ rects: textures, ...config})
 
         packedTextures.forEach(tex => {
             atlas.add(tex)
@@ -126,17 +126,18 @@ const texAtlas = { // singleton object
 
         return packedTextures
     },
-    getMeta(format, sprites) {
+    async getMeta(format, sprites) {
+        const data = await this.render(sprites)
         switch(format) {
             case "Hash":
-                return this.render(sprites).reduce((acc, cur) => {
+                return data.reduce((acc, cur) => {
                     const { name, pos, rotation, width, height, hitbox, hitCirc, anchorPoint } = cur
                     acc[name] = { ...pos, rotation, width, height, hitbox, hitCirc, pivot: anchorPoint }
                     
                     return acc
                 }, {})
             case "Array":
-                return this.render(sprites).map(({ name, pos, rotation, width, height, hitbox, hitCirc, anchorPoint }) => ({
+                return data.map(({ name, pos, rotation, width, height, hitbox, hitCirc, anchorPoint }) => ({
                     name, ...pos, rotation, width, height, hitbox, hitCirc, pivot: anchorPoint
                 }))
             break

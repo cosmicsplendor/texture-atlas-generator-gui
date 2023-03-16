@@ -1,58 +1,32 @@
-const sortingFns = {
-    "max-side": (a, b) => Math.max(b.width, b.height) - Math.max(a.width, a.height),
-    area: (a, b) => b.width * b.height - a.width * a.height,
-    diagonal: (a, b) => (b.width * b.width + b.height * b.height) - (a.width * a.width + a.height * a.height),
-    perimeter: (a, b) => (b.width + b.height) - (a.width + a.height),
-    width: (a, b) => b.width - a.width,
-    height: (a, b) => b.height - a.height
-}
-
-const calcAtlasHeight = rootNode => { // tail call optimized
-    if (!rootNode.down) {
-        return rootNode.y
-    }
-    return calcAtlasHeight(rootNode.down)
-}
-const calcAtalsWidth = (rects, margin=0) => {
-    const yExtent = rects.reduce((width, rect) => {
-        return Math.max(rect.pos.x + (rects.rotation === 90 ? rect.height: rect.width), width)
-    }, 0)
-    return yExtent + margin
+import lib from "max-rects-bin-pack"
+const MaxRects = lib.MaxRects
+const calcAtlasBound = (rects, margin=0) => {
+    const bounds = rects.reduce((bounds, rect) => {
+        return {
+            width: Math.max(rect.pos.x + rect.width, bounds.width),
+            height: Math.max(rect.pos.y + rect.height, bounds.height)
+        }
+    }, { width: 0, height: 0 })
+    bounds.width += margin
+    bounds.height += margin
+    return bounds
 }
 export default function pack({ rects: rawRects, sortingFn, rotationEnabled, margin }) {
+    
     if (rawRects.length === 0) {
         return { packedRects: [], bound: { width: 0, height: 0 } }
     }
-
-    const occupyNode = (node, { w, h }) => {
-        const { x: marginX, y: marginY } = margin
-        const tw = w + 2 * marginX, th = h + 2 * marginY
-        node.right = { x: node.x + tw, y: node.y, width: node.width - tw, height: th }
-        node.down = { x: node.x, y: node.y + th, width: node.width, height: node.height - th }
-        node.occupied = true
-        return { pos: { x: node.x + marginX, y: node.y + marginY } }
-    }
-
-    const findPos = (node, { width: w, height: h }) => {
-        if (node.occupied) {
-            return findPos(node.right, { width: w, height: h }) || findPos(node.down, { width: w, height: h })
-        }
-        const tw = w + 2 * margin.x, th = h + 2 * margin.y
-        return (node.width >= tw && node.height >= th) ? occupyNode(node, { w, h }) :
-            (node.width >= th && node.height >= tw && rotationEnabled) ? { ...occupyNode(node, { h: w, w: h }), rotation: 90, pivot: { x: 0, y: -h } } :
-                null
-    }
-
-    const rects = rawRects.slice().sort(sortingFns[sortingFn])
-
-    const totalArea = rects.reduce((acc, cur) => acc + (cur.width + margin.x) * (cur.height + margin.y), 0)
-    const containerWidth = Math.max(rects[0].width + margin.x, rects[0].height + margin.y, Math.round(Math.sqrt(totalArea * 1.1)))
-    const rootNode = { x: 0, y: 0, width: containerWidth, height: Infinity } // root node of the tree
-    const packedRects = rects.map(rect => ({ ...rect, ...findPos(rootNode, rect) }))
-    const containerHeight = calcAtlasHeight(rootNode, margin.y)
-    const optimizedContainerWidth = calcAtalsWidth(packedRects, margin.x)
-    return {
-        packedRects,
-        bound: { width: optimizedContainerWidth, height: containerHeight }
-    }
+    const MARGIN = Math.max(margin.x, margin.y)
+    const mr = new MaxRects(MARGIN, 0, false)
+    return new Promise((resolve, reject) => {
+        mr.calc(rawRects, (error, results) => {
+            if (error) return reject(error)
+            const packedRects = results.arrangment.map(rect => {
+                const { left, top, id } = rect
+                const texture = rawRects.find(rr => rr.id === id)
+                return Object.assign(texture, { pos: { x: left, y: top } })
+            })
+            resolve({ packedRects, bound: calcAtlasBound(packedRects, MARGIN) })
+        })
+    })
 }

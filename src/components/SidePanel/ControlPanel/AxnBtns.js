@@ -10,9 +10,9 @@ import styles from "../style.css"
 export default () => {
     const { settings: { metaFormat }, imports } = useContext(AppContext)
 
-    const downloadMeta = useCallback(() => {
+    const downloadMeta = useCallback(async () => {
         if (imports.length === 0) return
-        const body = JSON.stringify(texAtlas.getMeta(metaFormat, imports))
+        const body = JSON.stringify(await texAtlas.getMeta(metaFormat, imports))
         download.text({ 
             body, name: "atlasmeta", 
             format: "json"

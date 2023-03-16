@@ -27,6 +27,7 @@
   "dependencies": {
     "@ant-design/icons": "^4.4.0",
     "antd": "^4.10.3",
+    "max-rects-bin-pack": "^1.0.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "uuid": "^8.3.2"
