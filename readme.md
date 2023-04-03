@@ -17,3 +17,4 @@ npm start
 * customizable margin support
 * Multiple rect sorting functions to choose from (optimal choice depends on the set of input sprites)
 * Hitbox Editor
+* Pivot Point Editor
