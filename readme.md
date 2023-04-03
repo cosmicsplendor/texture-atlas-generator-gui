@@ -4,8 +4,7 @@ This is a free web-based gui application for generating texture atlas. At this p
 
 Over time, I will keep adding new features and improving UX.
 
-In case you're curious, it uses React.js, and I believe this choice is self-explanatory. Currently, the app uses binary-tree strip packing algorithm, but I am open to adding other algorithms, particularly max-rects.
-
+In case you're curious, it uses React.js, and I believe this choice is self-explanatory. Currently, the app uses ~~binary-tree strip packing~~ really efficient maxrects algorithm for packing.
 "start" npm script can be used to spin up a dev server:
 
 ```
