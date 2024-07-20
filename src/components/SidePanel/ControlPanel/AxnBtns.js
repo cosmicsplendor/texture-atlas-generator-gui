@@ -6,16 +6,17 @@ import * as download from "../../../utils/download"
 import AppContext from "../../../AppContext"
 import texAtlas from "../../../utils/texAtlas"
 import styles from "../style.css"
+import { metaFormats } from "../../../hooks/useSettings"
 
 export default () => {
     const { settings: { metaFormat }, imports } = useContext(AppContext)
 
     const downloadMeta = useCallback(async () => {
         if (imports.length === 0) return
-        const body = JSON.stringify(await texAtlas.getMeta(metaFormat, imports))
+        const body = await texAtlas.getMeta(metaFormat, imports)
         download.text({ 
-            body, name: "atlasmeta", 
-            format: "json"
+            body, name: "texture", 
+            format: metaFormats.find(mf => mf.name === metaFormat).ext
         })
     }, [ imports, metaFormat ])
     
@@ -24,7 +25,7 @@ export default () => {
         download.canvas({ 
             canvas: texAtlas.renderer.canvas, 
             offscreen: true, 
-            name: "texatlas", 
+            name: "texture", 
             format: "png"
         })
     }, [ imports, metaFormat ])

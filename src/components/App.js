@@ -13,7 +13,7 @@ const  App = () => {
                 ghost={false}
                 backIcon=""
                 onBack={() => {}}
-                title="Texture Atlas Generator GUI"
+                title="Online Texture Atlas Generator"
                 subTitle="made with ❤️ by"
                 tags={<Tag color="blue"><a style={{color: "#1890ff"}} href="https://twitter.com/frigidelixir" target="_blank">Umesh KC</a></Tag>}
                 extra={

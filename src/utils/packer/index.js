@@ -11,7 +11,7 @@ const calcAtlasBound = (rects, margin=0) => {
     bounds.height += margin
     return bounds
 }
-export default function pack({ rects: rawRects, sortingFn, rotationEnabled, margin }) {
+export default function pack({ rects: rawRects, margin }) {
     
     if (rawRects.length === 0) {
         return { packedRects: [], bound: { width: 0, height: 0 } }

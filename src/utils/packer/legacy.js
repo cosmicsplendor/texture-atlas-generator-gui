@@ -19,7 +19,7 @@ const calcAtalsWidth = (rects, margin=0) => {
     }, 0)
     return yExtent + margin
 }
-export default function pack({ rects: rawRects, sortingFn, rotationEnabled, margin }) {
+export default function pack({ rects: rawRects, sortingFn="max-side", rotationEnabled, margin }) {
     
     if (rawRects.length === 0) {
         return { packedRects: [], bound: { width: 0, height: 0 } }
@@ -52,7 +52,6 @@ export default function pack({ rects: rawRects, sortingFn, rotationEnabled, marg
     const packedRects = rects.map(rect => ({ ...rect, ...findPos(rootNode, rect) }))
     const containerHeight = calcAtlasHeight(rootNode, margin.y)
     const optimizedContainerWidth = calcAtalsWidth(packedRects, margin.x)
-    console.log(packedRects)
     return {
         packedRects,
         bound: { width: optimizedContainerWidth, height: containerHeight }

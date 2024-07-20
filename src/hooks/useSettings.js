@@ -1,40 +1,73 @@
 import { useState, useReducer, useCallback, useMemo } from "react"
 
-export const sortingFns = [
-    "max-side",
-    "perimeter",
-    "area",
-    "diagonal",
-    "width",
-    "height",
-]
-
 export const metaFormats = [
-    "Hash",
-    "Array"
+    {
+        name: "CSS Sprite",
+        ext: "css"
+    },
+    {
+        name: "Cocos 2D",
+        ext: "plist"
+    },
+    {
+        name: "Godot",
+        ext: "tpsheet"
+    },
+    {
+        name: "JSON Array",
+        ext: "json"
+    },
+    {
+        name: "JSON Hash",
+        ext: "json"
+    },
+    {
+        name: "Phaser 3",
+        ext: "json"
+    },
+    {
+        name: "PIXI",
+        ext: "json"
+    },
+    {
+        name: "Unity3D",
+        ext: "tpsheet"
+    },
+    {
+        name: "Unreal Engine",
+        ext: "paper2dsprites"
+    },
+    {
+        name: "XML",
+        ext: "xml"
+    }
 ]
 
+export const algorithms = [
+    "Max Rects",
+    "BinaryTree Bin Packer"
+]
 const initialSettings = {
-    sortingFn: sortingFns[0],
-    metaFormat: metaFormats[0],
+    metaFormat: "Phaser 3",
     margin: {
         x: 0,
         y: 0
     },
-    rotationEnabled: true
+    rotationEnabled: false,
+    algorithm: algorithms[1],
 }
 
 export default () => {
-    const [ sortingFn, setSortingFn ] = useState(initialSettings.sortingFn)
+    const [ algorithm, setAlgorithm ] = useState(initialSettings.algorithm)
     const [ metaFormat, setMetaFormat ] = useState(initialSettings.metaFormat)
     const [ rotationEnabled, setRotationEnabled ] = useState(initialSettings.rotationEnabled)
     const [ margin, updateMargin ] = useReducer((prevMargin, update) => {
         return { ...prevMargin, ...update }
     }, initialSettings.margin)
 
-    const updateSettings = useCallback(({ sortingFn, metaFormat, rotationEnabled, margin }) => {
-        if (!!sortingFn) {
-            return setSortingFn(sortingFn)
+    const updateSettings = useCallback(({ algorithm, metaFormat, rotationEnabled, margin }) => {
+        if (!!algorithm) {
+            return setAlgorithm(algorithm)
         }
         if (!!metaFormat) {
             return setMetaFormat(metaFormat)
@@ -48,8 +81,8 @@ export default () => {
     }, [])
 
     const settings = useMemo(() => {
-        return { sortingFn, metaFormat, rotationEnabled, margin }
-    }, [ sortingFn, metaFormat, rotationEnabled, margin])
+        return { algorithm, metaFormat, rotationEnabled, margin }
+    }, [ algorithm, metaFormat, rotationEnabled, margin])
 
     return [
         settings,
