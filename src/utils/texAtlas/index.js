@@ -298,7 +298,7 @@ const texAtlas = { // singleton object
                             return {
                                 pivot: {
                                     x: anchorPoint.x / width,
-                                    y: anchorPoint.y/height
+                                    y: anchorPoint.y / height
                                 },
                                 filename: cur.name,
                                 rotated: !!rotation,
