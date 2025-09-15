@@ -22,6 +22,10 @@ export const metaFormats = [
         ext: "json"
     },
     {
+        name: "MonoGame.Extended",
+        ext: "json"
+    },
+    {
         name: "Phaser 3",
         ext: "json"
     },
