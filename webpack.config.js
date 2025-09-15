@@ -61,6 +61,6 @@ module.exports = {
     devtool: "source-map",
     devServer: {
         port: 8080,
-        contentBase: "./dist"
+        static: "./dist"
     }
 }
