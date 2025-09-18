@@ -390,13 +390,9 @@ const texAtlas = { // singleton object
                                 frames[name].size = cur.originalSize || { w: width, h: height };
                             }
 
-                            // Offset if present
-                            if (cur.offset) {
-                                frames[name].offset = cur.offset;
-                            }
-
                             // Pivot point, normalized 0-1
                             if (anchorPoint) {
+                                frames[name].offset = { x: 0, y: 0 }
                                 frames[name].pivot = {
                                     x: anchorPoint.x / width,
                                     y: anchorPoint.y / height
