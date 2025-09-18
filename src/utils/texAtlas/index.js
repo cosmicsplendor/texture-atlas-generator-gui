@@ -406,6 +406,8 @@ const texAtlas = { // singleton object
                             // Rotation in degrees if set
                             if (rotation) {
                                 frames[name].rotated = rotation;
+                                frames[name].frame.w = height;
+                                frames[name].frame.h = width;
                             }
 
                             return frames
