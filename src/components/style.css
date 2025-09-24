@@ -23,6 +23,7 @@
     left: 0;
     background-color: rgba(0, 0, 0, 0.8);
     color: white;
+    border-top-right-radius: 4px;
     padding: 8px;
     font-family: Arial, sans-serif;
     font-size: 14px;

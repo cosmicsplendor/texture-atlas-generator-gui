@@ -53,22 +53,26 @@ const spriteToTexture = sprite => {
 const computePreviewImgWidth = (containerBounds, imgBounds) => {
     const { width: cwidth, height: cheight } = containerBounds
     const { width, height } = imgBounds
-    const needsResizing = cwidth <= width || cheight <= width
+    const needsResizing = cwidth <= width || cheight <= height
     if (!needsResizing) return [width, height]
+
     const caspect = cwidth / cheight
     const aspect = width / height
 
     if (caspect > aspect) {
+        // container is wider than image -> fit by height
         return [
             cheight * aspect,
             cheight
         ]
     }
+    // container is narrower than image -> fit by width
     return [
         cwidth,
         cwidth / aspect
     ]
 }
+
 
 const texAtlas = { // singleton object
     atlas: null,
