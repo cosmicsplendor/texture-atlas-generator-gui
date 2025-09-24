@@ -14,15 +14,15 @@ const  App = () => {
             <PageContainer
                 header={{
                     title: "Online Texture Atlas Generator",
-                    subTitle: "made with ❤️ by",
+                    subTitle: "made with ❤️",
                     tags: (
                         <Tag color="blue">
                         <a
-                            href="https://twitter.com/frigidelixir"
+                            href="https://github.com/cosmicsplendor/texture-atlas-generator-gui"
                             target="_blank"
                             rel="noopener noreferrer"
                         >
-                            <Text style={{ color: "#1890ff" }}>Umesh KC</Text>
+                            <Text style={{ color: "#1890ff" }}>on github</Text>
                         </a>
                         </Tag>
                     ),
