@@ -1,5 +1,4 @@
 import { useContext, useEffect, useRef, useMemo, useState } from "react"
-
 import AppContext from "../../AppContext"
 import styles from "../style.css"
 import texAtlas from "../../utils/texAtlas"
@@ -25,10 +24,15 @@ export default () => {
         if (finalArea === 0) return 0
         return (minArea / finalArea * 100).toFixed(2)
     }, [minArea, finalArea])
-    console.log(efficiency)
     return (
         <div className={styles.preview} ref={previewContainerRef}>
             <img className={styles.previewImg} id={PREVIEW_ID} />
+            {
+                efficiency > 0 &&
+                <div className={styles.efficiencyDisplay}>
+                    <span>Packing Efficiency: {efficiency}%</span>
+                </div>
+            }
         </div>
     )
 }
