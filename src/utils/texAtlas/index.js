@@ -95,7 +95,6 @@ const texAtlas = { // singleton object
         this.clear()
         const textures = sprites.map(spriteToTexture)
         const { packedRects: packedTextures, bound } = config.algorithm === "Max Rects" ? await packRects({ rects: textures, ...config }): await packRectsBTBP({ rects: textures, ...config })
-
         packedTextures.forEach(tex => {
             atlas.add(tex)
         })
@@ -125,7 +124,7 @@ const texAtlas = { // singleton object
                 previewImg.setAttribute("src", null)
             })
 
-        return packedTextures
+        return bound
     },
     async getMeta(format, sprites, outputName = "texture.png") {
         const data = await this.render(sprites)
