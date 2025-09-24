@@ -1,3 +1,4 @@
+import { notification } from "antd"
 import lib from "max-rects-bin-pack"
 const MaxRects = lib.MaxRects
 const calcAtlasBound = (rects, margin=0) => {
@@ -20,7 +21,14 @@ export default function pack({ rects: rawRects, margin }) {
     const mr = new MaxRects(MARGIN, 0, false)
     return new Promise((resolve, reject) => {
         mr.calc(rawRects, (error, results) => {
-            if (error) return reject(error)
+            if (error) {
+                notification.open({
+                    message: "MaxRects Packing Error",
+                    description: error + "\nPlese Clear and Switch to Binary Tree Bin Packer Algorithm",
+                    duration: 0
+                })
+                return 
+            }
             const packedRects = results.arrangment.map(rect => {
                 const { left, top, id } = rect
                 const texture = rawRects.find(rr => rr.id === id)
