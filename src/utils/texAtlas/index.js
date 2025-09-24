@@ -378,6 +378,51 @@ const texAtlas = { // singleton object
             ].join("\n")
         }
 
+        if (format === "MonoGame.Extended") {
+            const output = {
+                textures: [
+                    {
+                        filename: outputName,
+                        frames: data.reduce((frames, cur) => {
+                            const { name, pos, width, height, anchorPoint, rotation } = cur
+                            frames[name] = {
+                                frame: { x: pos.x, y: pos.y, w: width, h: height }
+                            }
+
+                            // Only include size if needed
+                            if (cur.originalSize || anchorPoint) {
+                                frames[name].size = cur.originalSize || { w: width, h: height };
+                            }
+
+                            // Pivot point, normalized 0-1
+                            if (anchorPoint) {
+                                frames[name].offset = { x: 0, y: 0 }
+                                frames[name].pivot = {
+                                    x: anchorPoint.x / width,
+                                    y: anchorPoint.y / height
+                                }
+                            }
+
+                            // Rotation in degrees if set
+                            if (rotation) {
+                                frames[name].rotated = rotation;
+                                frames[name].frame.w = height;
+                                frames[name].frame.h = width;
+                            }
+
+                            return frames
+                        }, {})
+                    }
+                ],
+                meta: {
+                    dataformat: "monogame-extended",
+                    version: "1.2"
+                }
+            }
+
+            return JSON.stringify(output, null, 2);
+        }
+
     }
 }
 

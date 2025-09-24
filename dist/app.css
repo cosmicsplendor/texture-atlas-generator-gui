@@ -22,3 +22,24 @@ body {
     justify-content: center;
     align-items: center;
 }
+/* Restore AntD v4 styling */
+.ant-btn,
+.ant-tag,
+.ant-select-selector,
+.ant-select-item-option-content,
+.ant-input,
+.ant-typography,
+.ant-page-header-heading-title,
+.ant-page-header-heading-sub-title {
+  font-family: monospace !important;
+}
+.ant-page-header-heading-sub-title {
+    opacity: 0.65 !important;
+}
+.ant-switch {
+    width: 32px !important;
+}
+.ant-input-group-addon {
+    background-color: #fafafa !important;
+    border-radius: 2px !important;
+}

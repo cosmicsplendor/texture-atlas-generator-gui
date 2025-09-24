@@ -5,7 +5,7 @@
   "private": true,
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "webpack serve --open --watch",
+    "start": "webpack serve --open",
     "build": "webpack --mode=production"
   },
   "keywords": [],
@@ -21,13 +21,14 @@
     "css-loader": "^5.0.1",
     "file-loader": "^6.2.0",
     "style-loader": "^2.0.0",
-    "webpack": "^5.11.1",
-    "webpack-cli": "^4.3.1",
-    "webpack-dev-server": "^3.11.1"
+    "webpack": "^5.101.3",
+    "webpack-cli": "^6.0.1",
+    "webpack-dev-server": "^5.2.2"
   },
   "dependencies": {
     "@ant-design/icons": "^4.4.0",
-    "antd": "^4.10.3",
+    "@ant-design/pro-components": "^2.8.10",
+    "antd": "^5.27.3",
     "assert": "^2.1.0",
     "max-rects-bin-pack": "^1.0.0",
     "process": "^0.11.10",

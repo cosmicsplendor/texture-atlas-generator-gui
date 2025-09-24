@@ -1,4 +1,6 @@
-import { PageHeader, Tag } from "antd"
+import { Tag, Typography } from "antd"
+import { PageContainer } from "@ant-design/pro-components"
+const { Text } = Typography
 
 import Canvas from "./Canvas"
 import SidePanel from "./SidePanel"
@@ -9,16 +11,24 @@ import styles from "./style.css"
 const  App = () => {
     return (
         <div id="app">
-            <PageHeader
+            <PageContainer
+                header={{
+                    title: "Online Texture Atlas Generator",
+                    subTitle: "made with ❤️ by",
+                    tags: (
+                        <Tag color="blue">
+                        <a
+                            href="https://twitter.com/frigidelixir"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            <Text style={{ color: "#1890ff" }}>Umesh KC</Text>
+                        </a>
+                        </Tag>
+                    ),
+                    extra: <ClearBtn />,
+                }}
                 ghost={false}
-                backIcon=""
-                onBack={() => {}}
-                title="Online Texture Atlas Generator"
-                subTitle="made with ❤️ by"
-                tags={<Tag color="blue"><a style={{color: "#1890ff"}} href="https://twitter.com/frigidelixir" target="_blank">Umesh KC</a></Tag>}
-                extra={
-                    <ClearBtn />
-                }
                 className={styles.appbar}
             />
             <ImportPanel />
