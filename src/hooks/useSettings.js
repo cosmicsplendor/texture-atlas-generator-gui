@@ -58,7 +58,7 @@ const initialSettings = {
         y: 0
     },
     rotationEnabled: false,
-    algorithm: algorithms[1],
+    algorithm: algorithms[0],
 }
 
 export default () => {
