@@ -13,7 +13,7 @@ export default () => {
         texAtlas
             .applySettings(settings)
             .render(imports)
-            .then(bound => {
+            .then(({bound}) => {
                 setFinalArea(bound.width * bound.height)
              })
     }, [settings.algorithm, settings.rotationEnabled, settings.margin, imports.length])

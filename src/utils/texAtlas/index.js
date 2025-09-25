@@ -128,10 +128,10 @@ const texAtlas = { // singleton object
                 previewImg.setAttribute("src", null)
             })
 
-        return bound
+        return {bound, data: packedTextures }
     },
     async getMeta(format, sprites, outputName = "texture.png") {
-        const data = await this.render(sprites)
+        const {data} = await this.render(sprites)
         const previewImg = document.querySelector("#preview")
         const size = {
             width: parseInt(previewImg.getAttribute("width")),
