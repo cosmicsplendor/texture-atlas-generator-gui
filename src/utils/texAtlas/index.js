@@ -296,7 +296,7 @@ const texAtlas = { // singleton object
                         },
                         scale: 1,
                         frames: data.map(cur => {
-                            const { pos, width, height, rotation, anchorPoint={x: 0.5, y: 0.5} } = cur
+                            const { pos, width, height, rotation, anchorPoint={x: cur.width * 0.5 , y: cur.height * 0.5 } } = cur
                             const frame = { x: pos.x, y: pos.y, w: width, h: height }
                             return {
                                 pivot: {
